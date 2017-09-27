@@ -1,28 +1,36 @@
 import java.util.Random;
 
 public class GameMap {
-    private MapObject [][] map = new MapObject[][]{};
+    private MapObject [][] map;
+    boolean isCycled = true;
+    int foodCount;
+    int poisonCount;
+    private Random rnd = new Random();
+
+    public GameMap(int width, int height){
+        map = new MapObject[width][height];
+    }
+
+    int Width(){
+        return map[0].length;
+    }
+    int Height(){
+        return map[1].length;
+    }
+
     public void setObject(int x, int y, MapObject object){
         map[x][y] = object;
     }
-    public MapObject getObject(int x, int y){
+
+    MapObject getObject(int x, int y){
         return map[x][y];
     }
-    public MapObject getObject(Location location){
+
+    MapObject getObject(Location location){
         return getObject(location.x, location.y);
     }
-    public int Width(){
-        return map[0].length;
-    }
-    public int Height(){
-        return map[1].length;
-    }
-    public boolean isCycled = true;
-    public int FoodCount;
-    public int PoisonCount;
-    private Random rnd = new Random();
 
-    public Location GenerateFood(boolean poison){
+    Location generateFood(boolean poison){
         while (true)
         {
             int x = rnd.nextInt(Width() - 1);
@@ -32,8 +40,8 @@ public class GameMap {
                 Location result = new Location(x, y);
                 map[x][y].Food = new Food(result, 10, poison);
                 if (!poison)
-                    FoodCount++;
-                else PoisonCount++;
+                    foodCount++;
+                else poisonCount++;
                 return result;
             }
         }
