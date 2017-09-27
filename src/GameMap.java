@@ -1,3 +1,5 @@
+import java.util.Random;
+
 public class GameMap {
     private MapObject [][] map = new MapObject[][]{};
     public void setObject(int x, int y, MapObject object){
@@ -18,7 +20,22 @@ public class GameMap {
     public boolean isCycled = true;
     public int FoodCount;
     public int PoisonCount;
-    public void GenerateFood(boolean poison){
-        throw new UnsupportedOperationException();
+    private Random rnd = new Random();
+
+    public Location GenerateFood(boolean poison){
+        while (true)
+        {
+            int x = rnd.nextInt(Width() - 1);
+            int y = rnd.nextInt(Height() - 1);
+            if (map[x][y].Snake == null && map[x][y].Wall == null && map[x][y].Food == null)
+            {
+                Location result = new Location(x, y);
+                map[x][y].Food = new Food(result, 10, poison);
+                if (!poison)
+                    FoodCount++;
+                else PoisonCount++;
+                return result;
+            }
+        }
     }
 }
