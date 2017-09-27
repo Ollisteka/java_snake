@@ -8,4 +8,12 @@ public class Location {
         this.x = x;
         this.y = y;
     }
+    @Override
+    public boolean equals(Object other){
+        if (other == null) return false;
+        if (other == this) return true;
+        if (!(other instanceof Location))return false;
+        Location otherLocation = (Location)other;
+    return this.x == otherLocation.x && this.y == otherLocation.y;
+    }
 }
