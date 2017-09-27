@@ -1,3 +1,5 @@
+package main;
+
 public class GameState {
     GameMap Map;
     boolean IsOver = false;

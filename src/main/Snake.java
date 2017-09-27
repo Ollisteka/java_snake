@@ -1,10 +1,17 @@
+package main;
+
 import java.util.ArrayDeque;
 import java.util.Random;
 
 public class Snake {
-    public ArrayDeque<Location> Body = new ArrayDeque<>();
+    ArrayDeque<Location> Body = new ArrayDeque<>();
     private Random rnd = new Random();
-    public Direction direction = Direction.Stop;
+    Direction direction = Direction.Stop;
+
+    public Snake(int x, int y)
+    {
+        Body.addFirst(new Location(x, y));
+    }
 
     public Location getHead(){
         return Body.getFirst();
@@ -19,11 +26,6 @@ public class Snake {
         if (value<=0)
             return;
         length = value;
-    }
-
-    public Snake(int x, int y)
-    {
-        Body.addFirst(new Location(x, y));
     }
 
     public void Move(Direction dir, GameState game)
@@ -90,13 +92,13 @@ public class Snake {
         game.Map.getObject(location).Food = null;
         if (!food.Poison)
         {
-            game.Map.FoodCount--;
-            length++;
+            game.Map.foodCount--;
+            setLength(length + 1);
         }
         else
         {
-            game.Map.PoisonCount--;
-            length--;
+            game.Map.poisonCount--;
+            setLength(length - 1);
             DeleteTail(game);
         }
 
@@ -106,13 +108,13 @@ public class Snake {
 
     private void MakeFood(GameState game)
     {
-        while (game.Map.FoodCount == 0)
+        while (game.Map.foodCount == 0)
         {
             int poison = rnd.nextInt();
 
-            if (game.noPoison || game.Map.PoisonCount == 1)
+            if (game.noPoison || game.Map.poisonCount == 1)
                 poison = 1;
-            game.Map.GenerateFood(poison % 3 == 0);
+            game.Map.generateFood(poison % 3 == 0);
         }
     }
 
