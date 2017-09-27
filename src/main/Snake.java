@@ -4,9 +4,9 @@ import java.util.ArrayDeque;
 import java.util.Random;
 
 public class Snake {
-    ArrayDeque<Location> Body = new ArrayDeque<>();
+    public ArrayDeque<Location> Body = new ArrayDeque<>();
     private Random rnd = new Random();
-    Direction direction = Direction.Stop;
+    public Direction direction = Direction.Stop;
 
     public Snake(int x, int y)
     {
