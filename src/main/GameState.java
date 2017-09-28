@@ -1,17 +1,23 @@
 package main;
 
 public class GameState {
-    GameMap Map;
-    boolean IsOver = false;
-    boolean noPoison = true;
-    int Scores;
 
-    public GameState(int width, int height) {
-         Map = new GameMap(width, height);
-    }
+  public GameMap Map;
+  public Snake Snake;
+  public boolean IsOver = false;
+  public boolean noPoison = true;
+  public int Scores;
 
-    public GameState(int width, int height, boolean noPoison){
-        this.noPoison = noPoison;
-        Map = new GameMap(width, height);
-    }
+  public GameState(int width, int height, Snake snake) {
+    Map = new GameMap(width, height);
+    Snake = snake;
+    Map.addSnake(Snake);
+  }
+
+  public GameState(int width, int height, Snake snake, boolean noPoison) {
+    this.noPoison = noPoison;
+    Map = new GameMap(width, height);
+    Snake = snake;
+    Map.addSnake(Snake);
+  }
 }
