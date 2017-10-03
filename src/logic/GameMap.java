@@ -1,4 +1,4 @@
-package main;
+package logic;
 
 import java.util.Random;
 
@@ -15,12 +15,18 @@ public class GameMap {
     map = new MapObject[width][height];
     makeLevelOne();
   }
+  public GameMap(int width, int height, boolean cycled) {
+    int[][] a = new int[width][height];
+    map = new MapObject[width][height];
+    isCycled = cycled;
+    makeLevelOne();
+  }
 
-  int Width() {
+  public int Width() {
     return map[0].length;
   }
 
-  int Height() {
+  public int Height() {
     return map[1].length;
   }
 
@@ -38,7 +44,7 @@ public class GameMap {
     return map[x][y];
   }
 
-  MapObject getObject(Location location) {
+  public MapObject getObject(Location location) {
     return getObject(location.x, location.y);
   }
 

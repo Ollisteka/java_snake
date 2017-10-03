@@ -1,7 +1,7 @@
-import main.Direction;
-import main.GameState;
-import main.Location;
-import main.Snake;
+import logic.Direction;
+import logic.GameState;
+import logic.Location;
+import logic.Snake;
 import org.junit.Assert;
 import org.junit.Test;
 

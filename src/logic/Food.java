@@ -1,9 +1,9 @@
-package main;
+package logic;
 
 public class Food {
 
   public int Value;
-  public boolean Poison;
+  public boolean Poison = false;
   public Location Location;
 
   public Food(Location loc, int val, boolean poison) {
