@@ -1,35 +1,29 @@
 package gui;
 
 import java.awt.Color;
-import javax.swing.JFrame;
 import logic.GameState;
 import logic.Location;
 import logic.MapObject;
 
-public class Cell {
+class Cell {
 
-  public int X;
-  public int Y;
-  public int Width;
-  public int Height;
-  public Color color;
+  int x;
+  int y;
+  int width;
+  int height;
+  Color color;
 
-  public Cell(int x, int y, int width, int height) {
-    X = x;
-    Y = y;
-    Width = width;
-    Height = height;
+  Cell(int x, int y, int width, int height) {
+    this.x = x;
+    this.y = y;
+    this.width = width;
+    this.height = height;
   }
 
-  public void UpdateColour(Location location, GameState game, JFrame form) {
+  void UpdateColour(Location location, GameState game) {
     MapObject smth = game.Map.getObject(location);
 
     if (smth.snake != null) {
-      Location[] body = new Location[smth.snake.body.size()];
-      int count = 0;
-      for (Location aBody : smth.snake.body) {
-        body[count++] = aBody;
-      }
       color = smth.snake.getHead().equals(smth.location) ? Color.MAGENTA : Color.PINK;
     } else if (smth.food != null && !smth.food.poison) {
       color = Color.GREEN;
