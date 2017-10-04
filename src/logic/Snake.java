@@ -5,20 +5,20 @@ import java.util.Random;
 
 public class Snake {
 
-  public ArrayDeque<Location> Body = new ArrayDeque<>();
+  public ArrayDeque<Location> body = new ArrayDeque<>();
   public Direction direction = Direction.Stop;
   private Random rnd = new Random();
   private int length = 1;
 
   public Snake(int x, int y) {
-    Body.addFirst(new Location(x, y));
+    body.addFirst(new Location(x, y));
   }
 
   public Location getHead() {
-    return Body.getFirst();
+    return body.getFirst();
   }
 
-  public int Length() {
+  public int getLength() {
     return length;
   }
 
@@ -29,21 +29,21 @@ public class Snake {
     length = value;
   }
 
-  public void Move(Direction dir, GameState game) {
-    Location newHead = FindNextLocation(getHead(), dir, game); //позиция, на которую мы сдвинемся
-    Body.addFirst(newHead); // добавили эту позицию в список
-    if (WillLose(getHead(), game) || game.Map.Width() * game.Map.Height() == Body.size()) {
+  public void move(Direction dir, GameState game) {
+    Location newHead = findNextLocation(getHead(), dir, game);
+    body.addFirst(newHead);
+    if (willLose(getHead(), game) || game.Map.width() * game.Map.height() == body.size()) {
       game.IsOver = true;
       return;
     }
-    game.Map.getObject(newHead).Snake = this; //добавили голову на карту
-    if (CanEat(newHead, game)) {
-      Eat(newHead, game);
+    game.Map.getObject(newHead).snake = this; //добавили голову на карту
+    if (canEat(newHead, game)) {
+      eat(newHead, game);
     }
-    DeleteTail(game);
+    deleteTail(game);
   }
 
-  private Location FindNextLocation(Location oldLocation, Direction dir, GameState game) {
+  private Location findNextLocation(Location oldLocation, Direction dir, GameState game) {
     int dX = 0;
     int dY = 0;
     switch (dir) {
@@ -63,43 +63,45 @@ public class Snake {
         dX++;
         direction = Direction.Right;
         break;
+      default:
+        break;
     }
     if (game.Map.isCycled) {
       return new Location(
-          (oldLocation.x + dX + game.Map.Width()) % game.Map.Width(),
-          (oldLocation.y + dY + game.Map.Height()) % game.Map.Height());
+          (oldLocation.x + dX + game.Map.width()) % game.Map.width(),
+          (oldLocation.y + dY + game.Map.height()) % game.Map.height());
     }
     return new Location(oldLocation.x + dX, oldLocation.y + dY);
   }
 
-  private void DeleteTail(GameState game) {
-    if (Body.size() > Length()) {
-      Location leftover = Body.removeLast(); //убрали хвостик
-      game.Map.getObject(leftover).Snake = null; //убрали хвостик с карты
+  private void deleteTail(GameState game) {
+    if (body.size() > getLength()) {
+      Location leftover = body.removeLast();
+      game.Map.getObject(leftover).snake = null;
     }
   }
 
-  private boolean CanEat(Location location, GameState game) {
-    return game.Map.getObject(location).Food != null;
+  private boolean canEat(Location location, GameState game) {
+    return game.Map.getObject(location).food != null;
   }
 
-  private void Eat(Location location, GameState game) {
-    Food food = game.Map.getObject(location).Food;
-    game.Map.getObject(location).Food = null;
-    if (!food.Poison) {
+  private void eat(Location location, GameState game) {
+    Food food = game.Map.getObject(location).food;
+    game.Map.getObject(location).food = null;
+    if (!food.poison) {
       game.Map.foodCount--;
       setLength(length + 1);
     } else {
       game.Map.poisonCount--;
       setLength(length - 1);
-      DeleteTail(game);
+      deleteTail(game);
     }
 
-    MakeFood(game);
-    game.Scores += food.Value;
+    makeFood(game);
+    game.Scores += food.value;
   }
 
-  private void MakeFood(GameState game) {
+  private void makeFood(GameState game) {
     while (game.Map.foodCount == 0) {
       int poison = rnd.nextInt();
 
@@ -110,11 +112,11 @@ public class Snake {
     }
   }
 
-  private boolean WillLose(Location location, GameState game) {
+  private boolean willLose(Location location, GameState game) {
     try {
       MapObject itemInNextPos = game.Map.getObject(location);
-      if (itemInNextPos.Wall != null && !itemInNextPos.Wall.CanGoThrough
-          || itemInNextPos.Snake != null) {
+      if (itemInNextPos.wall != null && !itemInNextPos.wall.canGoThrough
+          || itemInNextPos.snake != null) {
         return true;
       }
     } catch (IndexOutOfBoundsException exc) {

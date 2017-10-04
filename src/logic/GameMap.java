@@ -11,34 +11,37 @@ public class GameMap {
   private Random rnd = new Random();
 
   public GameMap(int width, int height) {
-    int[][] a = new int[width][height];
     map = new MapObject[width][height];
     makeLevelOne();
   }
+
   public GameMap(int width, int height, boolean cycled) {
-    int[][] a = new int[width][height];
     map = new MapObject[width][height];
     isCycled = cycled;
     makeLevelOne();
   }
 
-  public int Width() {
+  public int width() {
     return map[0].length;
   }
 
-  public int Height() {
+  public int height() {
     return map[1].length;
   }
 
   public void setObject(int x, int y, MapObject object) {
-    if (x >= Width() || y >= Height() || x < 0 || y < 0) {
+    if (x >= width() || y >= height() || x < 0 || y < 0) {
       throw new IndexOutOfBoundsException();
     }
     map[x][y] = object;
   }
 
+  public void setObject(Location location, MapObject object) {
+    this.setObject(location.x, location.y, object);
+  }
+
   public MapObject getObject(int x, int y) {
-    if (x >= Width() || y >= Height() || x < 0 || y < 0) {
+    if (x >= width() || y >= height() || x < 0 || y < 0) {
       throw new IndexOutOfBoundsException();
     }
     return map[x][y];
@@ -50,11 +53,11 @@ public class GameMap {
 
   Location generateFood(boolean poison) {
     while (true) {
-      int x = rnd.nextInt(Width() - 1);
-      int y = rnd.nextInt(Height() - 1);
-      if (map[x][y].Snake == null && map[x][y].Wall == null && map[x][y].Food == null) {
+      int x = rnd.nextInt(width() - 1);
+      int y = rnd.nextInt(height() - 1);
+      if (map[x][y].snake == null && map[x][y].wall == null && map[x][y].food == null) {
         Location result = new Location(x, y);
-        map[x][y].Food = new Food(result, 10, poison);
+        map[x][y].food = new Food(result, 10, poison);
         if (!poison) {
           foodCount++;
         } else {
@@ -67,23 +70,23 @@ public class GameMap {
   }
 
   public void addSnake(Snake snake) {
-    if (this.getObject(snake.getHead()).Snake != null
-        || this.getObject(snake.getHead()).Wall != null
-        || this.getObject(snake.getHead()).Food != null) {
+    if (this.getObject(snake.getHead()).snake != null
+        || this.getObject(snake.getHead()).wall != null
+        || this.getObject(snake.getHead()).food != null) {
       return;
     }
-    this.getObject(snake.getHead()).Snake = snake;
+    this.getObject(snake.getHead()).snake = snake;
   }
 
   public void addFood(Food food) {
-    if (this.getObject(food.Location).Snake != null
-        || this.getObject(food.Location).Wall != null
-        || this.getObject(food.Location).Food != null) {
+    if (this.getObject(food.location).snake != null
+        || this.getObject(food.location).wall != null
+        || this.getObject(food.location).food != null) {
       generateFood(false);
       return;
     }
-    this.getObject(food.Location).Food = food;
-    if (!food.Poison) {
+    this.getObject(food.location).food = food;
+    if (!food.poison) {
       foodCount++;
     } else {
       poisonCount++;
@@ -91,8 +94,8 @@ public class GameMap {
   }
 
   void makeLevelOne() {
-    for (int x = 0; x < Width(); x++) {
-      for (int y = 0; y < Height(); y++) {
+    for (int x = 0; x < width(); x++) {
+      for (int y = 0; y < height(); y++) {
         this.setObject(x, y, new MapObject(x, y));
       }
 

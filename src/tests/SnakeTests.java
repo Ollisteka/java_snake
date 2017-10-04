@@ -11,9 +11,9 @@ public class SnakeTests {
   public void testCreate() {
     Snake snake = new Snake(1, 2);
     Assert.assertEquals(new Location(1, 2), snake.getHead());
-    Assert.assertEquals(1, snake.Length());
+    Assert.assertEquals(1, snake.getLength());
     Assert.assertEquals(Direction.Stop, snake.direction);
-    Assert.assertEquals(1, snake.Body.size());
+    Assert.assertEquals(1, snake.body.size());
   }
 
   @Test
@@ -23,9 +23,9 @@ public class SnakeTests {
     Assert.assertEquals(0, game.Scores);
     Assert.assertEquals(new Location(0, 0), game.Snake.getHead());
 
-    game.Snake.Move(Direction.Right, game);
+    game.Snake.move(Direction.Right, game);
     Assert.assertEquals(new Location(1, 0), game.Snake.getHead());
-    Assert.assertEquals(null, game.Map.getObject(0, 0).Snake);
-    Assert.assertEquals(1, game.Snake.Length());
+    Assert.assertEquals(null, game.Map.getObject(0, 0).snake);
+    Assert.assertEquals(1, game.Snake.getLength());
   }
 }

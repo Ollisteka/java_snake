@@ -1,9 +1,9 @@
-import gui.gameForm;
+import gui.GameForm;
 import logic.GameState;
 
-public class main {
+public class Main {
   public static void main(String[] args) {
     GameState gameState = new GameState(0);
-    new gameForm(gameState);
+    new GameForm(gameState);
   }
 }

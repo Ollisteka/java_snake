@@ -2,13 +2,13 @@ package logic;
 
 public class MapObject {
 
-  public Snake Snake;
-  public Food Food;
-  public Wall Wall;
-  public Location Location;
+  public Snake snake;
+  public Food food;
+  public Wall wall;
+  public Location location;
 
   public MapObject(int x, int y) {
-    Location = new Location(x, y);
+    location = new Location(x, y);
   }
 
 }

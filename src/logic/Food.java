@@ -2,17 +2,17 @@ package logic;
 
 public class Food {
 
-  public int Value;
-  public boolean Poison = false;
-  public Location Location;
+  public int value;
+  public boolean poison = false;
+  public Location location;
 
   public Food(Location loc, int val, boolean poison) {
-    Location = loc;
+    location = loc;
     if (poison) {
-      Value = -val;
+      value = -val;
     } else {
-      Value = val;
+      value = val;
     }
-    Poison = poison;
+    this.poison = poison;
   }
 }

@@ -20,8 +20,8 @@ public class GameState {
     Snake = snake;
     Map.addSnake(Snake);
   }
-  public GameState(GameMap map, Snake snake, Food food)
-  {
+
+  public GameState(GameMap map, Snake snake, Food food) {
     Map = map;
     Map.addFood(food);
     Map.addSnake(snake);
@@ -29,32 +29,29 @@ public class GameState {
     IsOver = false;
     noPoison = true;
   }
-  public GameState(int level)
-  {
-    switch (level)
-    {
+
+  public GameState(int level) {
+    switch (level) {
       case 1:
-        MakeLevelOne(15, 15);
+        makeLevelOne(15, 15);
         break;
       default:
         noPoison = true;
-        MakeLevelZero(5, 5, true);
+        makeLevelZero(10, 10);
         break;
     }
     IsOver = false;
   }
 
-  private void MakeLevelZero(int width, int height, boolean mapIsCycled)
-  {
-    Map = new GameMap(width, height, mapIsCycled);
+  private void makeLevelZero(int width, int height) {
+    Map = new GameMap(width, height, true);
     Snake = new Snake(3, 3);
     Map.addSnake(Snake);
     Map.generateFood(false);
   }
 
-  private void MakeLevelOne(int width, int height)
-  {
-    Map = new GameMap(width, height);
+  private void makeLevelOne(int width, int height) {
+    Map = new GameMap(width, height, false);
     Snake = new Snake(3, 3);
     Map.addSnake(Snake);
     Map.generateFood(false);
