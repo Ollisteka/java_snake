@@ -32,11 +32,11 @@ public class Snake {
   public void move(Direction dir, GameState game) {
     Location newHead = findNextLocation(getHead(), dir, game);
     body.addFirst(newHead);
-    if (willLose(getHead(), game) || game.Map.width() * game.Map.height() == body.size()) {
-      game.IsOver = true;
+    if (willLose(getHead(), game) || game.map.width() * game.map.height() == body.size()) {
+      game.isOver = true;
       return;
     }
-    game.Map.getObject(newHead).snake = this; //добавили голову на карту
+    game.map.getObject(newHead).snake = this; //добавили голову на карту
     if (canEat(newHead, game)) {
       eat(newHead, game);
     }
@@ -66,10 +66,10 @@ public class Snake {
       default:
         break;
     }
-    if (game.Map.isCycled) {
+    if (game.map.isCycled) {
       return new Location(
-          (oldLocation.x + dX + game.Map.width()) % game.Map.width(),
-          (oldLocation.y + dY + game.Map.height()) % game.Map.height());
+          (oldLocation.x + dX + game.map.width()) % game.map.width(),
+          (oldLocation.y + dY + game.map.height()) % game.map.height());
     }
     return new Location(oldLocation.x + dX, oldLocation.y + dY);
   }
@@ -77,44 +77,44 @@ public class Snake {
   private void deleteTail(GameState game) {
     if (body.size() > getLength()) {
       Location leftover = body.removeLast();
-      game.Map.getObject(leftover).snake = null;
+      game.map.getObject(leftover).snake = null;
     }
   }
 
   private boolean canEat(Location location, GameState game) {
-    return game.Map.getObject(location).food != null;
+    return game.map.getObject(location).food != null;
   }
 
   private void eat(Location location, GameState game) {
-    Food food = game.Map.getObject(location).food;
-    game.Map.getObject(location).food = null;
+    Food food = game.map.getObject(location).food;
+    game.map.getObject(location).food = null;
     if (!food.poison) {
-      game.Map.foodCount--;
+      game.map.foodCount--;
       setLength(length + 1);
     } else {
-      game.Map.poisonCount--;
+      game.map.poisonCount--;
       setLength(length - 1);
       deleteTail(game);
     }
 
     makeFood(game);
-    game.Scores += food.value;
+    game.scores += food.value;
   }
 
   private void makeFood(GameState game) {
-    while (game.Map.foodCount == 0) {
+    while (game.map.foodCount == 0) {
       int poison = rnd.nextInt();
 
-      if (game.noPoison || game.Map.poisonCount == 1) {
+      if (game.noPoison || game.map.poisonCount == 1) {
         poison = 1;
       }
-      game.Map.generateFood(poison % 3 == 0);
+      game.map.generateFood(poison % 3 == 0);
     }
   }
 
   private boolean willLose(Location location, GameState game) {
     try {
-      MapObject itemInNextPos = game.Map.getObject(location);
+      MapObject itemInNextPos = game.map.getObject(location);
       if (itemInNextPos.wall != null && !itemInNextPos.wall.canGoThrough
           || itemInNextPos.snake != null) {
         return true;

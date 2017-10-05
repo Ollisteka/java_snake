@@ -19,13 +19,13 @@ public class SnakeTests {
   @Test
   public void testMove() {
     GameState game = new GameState(10, 10, new Snake(0, 0));
-    Assert.assertEquals(false, game.IsOver);
-    Assert.assertEquals(0, game.Scores);
-    Assert.assertEquals(new Location(0, 0), game.Snake.getHead());
+    Assert.assertEquals(false, game.isOver);
+    Assert.assertEquals(0, game.scores);
+    Assert.assertEquals(new Location(0, 0), game.snake.getHead());
 
-    game.Snake.move(Direction.Right, game);
-    Assert.assertEquals(new Location(1, 0), game.Snake.getHead());
-    Assert.assertEquals(null, game.Map.getObject(0, 0).snake);
-    Assert.assertEquals(1, game.Snake.getLength());
+    game.snake.move(Direction.Right, game);
+    Assert.assertEquals(new Location(1, 0), game.snake.getHead());
+    Assert.assertEquals(null, game.map.getObject(0, 0).snake);
+    Assert.assertEquals(1, game.snake.getLength());
   }
 }

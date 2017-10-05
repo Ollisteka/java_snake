@@ -21,7 +21,7 @@ class Cell {
   }
 
   void UpdateColour(Location location, GameState game) {
-    MapObject smth = game.Map.getObject(location);
+    MapObject smth = game.map.getObject(location);
 
     if (smth.snake != null) {
       color = smth.snake.getHead().equals(smth.location) ? Color.MAGENTA : Color.PINK;

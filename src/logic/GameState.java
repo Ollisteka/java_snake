@@ -2,31 +2,32 @@ package logic;
 
 public class GameState {
 
-  public GameMap Map;
-  public Snake Snake;
-  public boolean IsOver = false;
+  public GameMap map;
+  public Snake snake;
+  public boolean isOver = false;
   public boolean noPoison = true;
-  public int Scores;
+  public int scores;
+  public int level;
 
   public GameState(int width, int height, Snake snake) {
-    Map = new GameMap(width, height);
-    Snake = snake;
-    Map.addSnake(Snake);
+    map = new GameMap(width, height);
+    this.snake = snake;
+    map.addSnake(this.snake);
   }
 
   public GameState(int width, int height, Snake snake, boolean noPoison) {
     this.noPoison = noPoison;
-    Map = new GameMap(width, height);
-    Snake = snake;
-    Map.addSnake(Snake);
+    map = new GameMap(width, height);
+    this.snake = snake;
+    map.addSnake(this.snake);
   }
 
   public GameState(GameMap map, Snake snake, Food food) {
-    Map = map;
-    Map.addFood(food);
-    Map.addSnake(snake);
-    Snake = snake;
-    IsOver = false;
+    this.map = map;
+    this.map.addFood(food);
+    this.map.addSnake(snake);
+    this.snake = snake;
+    isOver = false;
     noPoison = true;
   }
 
@@ -40,20 +41,22 @@ public class GameState {
         makeLevelZero(10, 10);
         break;
     }
-    IsOver = false;
+    isOver = false;
   }
 
   private void makeLevelZero(int width, int height) {
-    Map = new GameMap(width, height, true);
-    Snake = new Snake(3, 3);
-    Map.addSnake(Snake);
-    Map.generateFood(false);
+    map = new GameMap(width, height, true);
+    snake = new Snake(3, 3);
+    map.addSnake(snake);
+    map.generateFood(false);
+    level = 0;
   }
 
   private void makeLevelOne(int width, int height) {
-    Map = new GameMap(width, height, false);
-    Snake = new Snake(3, 3);
-    Map.addSnake(Snake);
-    Map.generateFood(false);
+    map = new GameMap(width, height, false);
+    snake = new Snake(3, 3);
+    map.addSnake(snake);
+    map.generateFood(false);
+    level = 1;
   }
 }
