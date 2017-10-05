@@ -42,7 +42,6 @@ public class GameForm implements Runnable {
 
     frame.pack();
     frame.setLocationByPlatform(true);
-    frame.setResizable(false);
     frame.setVisible(true);
   }
 }
