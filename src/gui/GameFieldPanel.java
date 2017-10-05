@@ -35,15 +35,17 @@ public class GameFieldPanel extends JPanel {
   private Timer timer;
   private int timerTick;
 
+  private boolean gameIsPaused = false;
+
   GameFieldPanel(GameState game, JFrame parent) {
     this.game = game;
     this.parent = parent;
 
-    paintedMap = new Cell[this.game.Map.width()][this.game.Map.height()];
-    initializePaintedMap(game.Map);
+    paintedMap = new Cell[this.game.map.width()][this.game.map.height()];
+    initializePaintedMap(game.map);
 
-    setPreferredSize(new Dimension(this.game.Map.width() * (cellWidth + xGap),
-                                   this.game.Map.height() * (cellHeight + yGap)));
+    setPreferredSize(new Dimension(this.game.map.width() * (cellWidth + xGap),
+        this.game.map.height() * (cellHeight + yGap)));
     setFocusable(true);
     requestFocusInWindow();
 
@@ -61,8 +63,8 @@ public class GameFieldPanel extends JPanel {
   @Override
   public void paintComponent(Graphics g) {
     super.paintComponent(g);
-    for (int i = 0; i < game.Map.width(); i++) {
-      for (int j = 0; j < game.Map.height(); j++) {
+    for (int i = 0; i < game.map.width(); i++) {
+      for (int j = 0; j < game.map.height(); j++) {
         Cell cell = paintedMap[i][j];
         cell.UpdateColour(new Location(i, j), game);
         g.setColor(cell.color);
@@ -72,23 +74,37 @@ public class GameFieldPanel extends JPanel {
   }
 
   private void endGame() {
-    parent.setTitle("Game over. \n You scored " + game.Scores);
-    timer.stop();
+    parent.setTitle("Game over. \n You scored " + game.scores);
+    gameIsPaused = true;
   }
 
   private void makeMove(ActionEvent evt) {
-    parent.setTitle("snake. Score: " + game.Scores);
-    if (game.IsOver) {
+    parent.setTitle("Snake. Score: " + game.scores);
+    if (game.isOver) {
       endGame();
+    }
+    if (keyPressed == KeyEvent.VK_R) {
+      restartGame();
+    } else if (keyPressed == KeyEvent.VK_P) {
+      gameIsPaused = !gameIsPaused;
+      keyPressed = KeyEvent.KEY_LOCATION_UNKNOWN;
+      return;
+    } else if (gameIsPaused) {
       return;
     }
     moveSnake();
     repaint();
   }
 
+  private void restartGame() {
+    game = new GameState(game.level);
+    gameIsPaused = false;
+    repaint();
+  }
+
   private void moveSnake() {
     int key = keyPressed;
-    Snake snake = game.Snake;
+    Snake snake = game.snake;
 
     if (key == KeyEvent.VK_UP || key == KeyEvent.VK_W) {
       snake.move(Direction.Up, game);
