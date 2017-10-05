@@ -31,7 +31,7 @@ public class GameForm implements Runnable {
 
   @Override
   public void run() {
-    frame = new JFrame("Snake");
+    frame = new JFrame();
     frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
     gameFieldPanel = new GameFieldPanel(game, frame);
@@ -42,6 +42,7 @@ public class GameForm implements Runnable {
 
     frame.pack();
     frame.setLocationByPlatform(true);
+    frame.setResizable(false);
     frame.setVisible(true);
   }
 }
