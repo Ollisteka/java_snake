@@ -20,8 +20,8 @@ public class GameFieldPanel extends JPanel {
   private int cellWidth = 30;
   private int cellHeight = 30;
 
-  private int xGap = 1;
-  private int yGap = 1;
+  private int xGap = 2;
+  private int yGap = 2;
 
   private Cell[][] paintedMap;
   private GameState game;

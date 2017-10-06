@@ -1,3 +1,5 @@
+package tests;
+
 import logic.Direction;
 import logic.GameState;
 import logic.Location;

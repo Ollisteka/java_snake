@@ -23,10 +23,8 @@ public class Snake {
   }
 
   public void setLength(int value) {
-    if (value <= 0) {
-      return;
-    }
-    length = value;
+    if (value > 0)
+      length = value;
   }
 
   public void move(Direction dir, GameState game) {
@@ -96,7 +94,6 @@ public class Snake {
       setLength(length - 1);
       deleteTail(game);
     }
-
     makeFood(game);
     game.scores += food.value;
   }
