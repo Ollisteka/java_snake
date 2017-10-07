@@ -95,7 +95,7 @@ public class GameMap {
   void makeLevelOne() {
     for (int x = 0; x < width(); x++) {
       for (int y = 0; y < height(); y++) {
-        this.setObject(x, y, new MapObject(x, y));
+        this.setObject(x, y, new MapObject());
       }
 
     }

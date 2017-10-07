@@ -31,7 +31,7 @@ public class SnakeTests {
   @Test
   public void testEatFood(){
     GameState game = new GameState(10, 10, new Snake(0, 0));
-    MapObject f = new MapObject(1,0);
+    MapObject f = new MapObject();
     f.food = new Food(new Location(1,0), 10, false);
     game.map.setObject(1,0,f);
     game.snake.move(Direction.Right, game);

@@ -24,7 +24,7 @@ class Cell {
     MapObject smth = game.map.getObject(location);
 
     if (smth.snake != null) {
-      color = smth.snake.getHead().equals(smth.location) ? Color.MAGENTA : Color.PINK;
+      color = smth.snake.getHead().equals(location) ? Color.MAGENTA : Color.PINK;
     } else if (smth.food != null && !smth.food.poison) {
       color = Color.GREEN;
     } else if (smth.food != null && smth.food.poison) {
