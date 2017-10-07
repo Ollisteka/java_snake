@@ -21,9 +21,7 @@ public class GameMap {
     makeLevelOne();
   }
 
-  public int width() {
-    return map[0].length;
-  }
+  public int width() { return map.length; }
 
   public int height() {
     return map[1].length;
