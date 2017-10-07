@@ -66,7 +66,6 @@ public class GameMap {
         return result;
       }
     }
-
   }
 
   public void addSnake(Snake snake) {
