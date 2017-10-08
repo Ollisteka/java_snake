@@ -21,18 +21,15 @@ public class GameMap {
     makeLevelOne();
   }
 
-  public int width() {
-    return map[0].length;
-  }
+  public int width() { return map.length; }
 
   public int height() {
     return map[1].length;
   }
 
   public void setObject(int x, int y, MapObject object) {
-    if (x >= width() || y >= height() || x < 0 || y < 0) {
+    if (x >= width() || y >= height() || x < 0 || y < 0)
       throw new IndexOutOfBoundsException();
-    }
     map[x][y] = object;
   }
 
@@ -41,9 +38,8 @@ public class GameMap {
   }
 
   public MapObject getObject(int x, int y) {
-    if (x >= width() || y >= height() || x < 0 || y < 0) {
+    if (x >= width() || y >= height() || x < 0 || y < 0)
       throw new IndexOutOfBoundsException();
-    }
     return map[x][y];
   }
 
@@ -58,24 +54,23 @@ public class GameMap {
       if (map[x][y].snake == null && map[x][y].wall == null && map[x][y].food == null) {
         Location result = new Location(x, y);
         map[x][y].food = new Food(result, 10, poison);
-        if (!poison) {
+        if (!poison)
           foodCount++;
-        } else {
+        else
           poisonCount++;
-        }
         return result;
       }
     }
-
   }
 
   public void addSnake(Snake snake) {
-    if (this.getObject(snake.getHead()).snake != null
-        || this.getObject(snake.getHead()).wall != null
-        || this.getObject(snake.getHead()).food != null) {
-      return;
-    }
-    this.getObject(snake.getHead()).snake = snake;
+    for(Location point : snake.body)
+      if (this.getObject(point).snake != null
+              || this.getObject(point).wall != null
+              || this.getObject(point).food != null)
+        return;
+    for(Location point : snake.body)
+      this.getObject(point).snake = snake;
   }
 
   public void addFood(Food food) {
@@ -96,9 +91,8 @@ public class GameMap {
   void makeLevelOne() {
     for (int x = 0; x < width(); x++) {
       for (int y = 0; y < height(); y++) {
-        this.setObject(x, y, new MapObject(x, y));
+        this.setObject(x, y, new MapObject());
       }
-
     }
   }
 }

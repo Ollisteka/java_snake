@@ -20,8 +20,8 @@ public class GameFieldPanel extends JPanel {
   private int cellWidth = 30;
   private int cellHeight = 30;
 
-  private int xGap = 1;
-  private int yGap = 1;
+  private int xGap = 2;
+  private int yGap = 2;
 
   private Cell[][] paintedMap;
   private GameState game;
@@ -134,9 +134,8 @@ public class GameFieldPanel extends JPanel {
     int y = 0;
     for (int i = 0; i < gameMap.width(); i++) {
       for (int j = 0; j < gameMap.height(); j++) {
-        MapObject originalCell = gameMap.getObject(i, j);
         Cell cellToAdd = new Cell(x, y, cellWidth, cellHeight);
-        cellToAdd.UpdateColour(originalCell.location, game);
+        cellToAdd.UpdateColour(new Location(i,j), game);
         paintedMap[j][i] = cellToAdd;
         x += cellWidth + xGap;
       }
