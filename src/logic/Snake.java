@@ -29,11 +29,11 @@ public class Snake {
 
   public void move(Direction dir, GameState game) {
     Location newHead = findNextLocation(getHead(), dir, game);
-    body.addFirst(newHead);
-    if (willLose(getHead(), game) || game.map.width() * game.map.height() == body.size()) {
+    if (willLose(newHead, game) || game.map.width() * game.map.height() == body.size()) {
       game.isOver = true;
       return;
     }
+    body.addFirst(newHead);
     game.map.getObject(newHead).snake = this; //добавили голову на карту
     if (canEat(newHead, game)) {
       eat(newHead, game);
