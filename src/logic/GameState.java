@@ -7,7 +7,7 @@ public class GameState {
   public boolean isOver = false;
   public boolean noPoison = true;
   public int scores;
-  public int level;
+  public Level level;
 
   public GameState(int width, int height, Snake snake) {
     map = new GameMap(width, height);
@@ -31,9 +31,9 @@ public class GameState {
     noPoison = true;
   }
 
-  public GameState(int level) {
+  public GameState(Level level) {
     switch (level) {
-      case 1:
+      case one:
         makeLevelOne(15, 15);
         break;
       default:
@@ -49,7 +49,7 @@ public class GameState {
     snake = new Snake(3, 3);
     map.addSnake(snake);
     map.generateFood(false);
-    level = 0;
+    level = Level.zero;
   }
 
   private void makeLevelOne(int width, int height) {
@@ -57,6 +57,6 @@ public class GameState {
     snake = new Snake(3, 3);
     map.addSnake(snake);
     map.generateFood(false);
-    level = 1;
+    level = Level.one;
   }
 }

@@ -1,11 +1,11 @@
 package gui;
 
-import java.awt.event.KeyEvent;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import logic.GameState;
+import logic.Level;
 
 public class GameForm implements Runnable {
 
@@ -23,9 +23,18 @@ public class GameForm implements Runnable {
 
   private void initializeMenu(){
     menuBar = new JMenuBar();
-    JMenu menu = new JMenu("Menu");
+    JMenu menu = new JMenu("Choose level");
     menuBar.add(menu);
-    JMenuItem item = new JMenuItem("Test Item");
+    addLevelMenu(menu, Level.zero);
+    addLevelMenu(menu, Level.one);
+  }
+
+  private void addLevelMenu(JMenu menu, Level level) {
+    JMenuItem item = new JMenuItem(level.toString());
+    item.addActionListener(arg0 -> {
+      gameFieldPanel.startNewGame(level);
+      frame.pack();
+    });
     menu.add(item);
   }
 
@@ -43,5 +52,6 @@ public class GameForm implements Runnable {
     frame.pack();
     frame.setLocationByPlatform(true);
     frame.setVisible(true);
+    frame.setResizable(false);
   }
 }

@@ -11,8 +11,8 @@ import javax.swing.Timer;
 import logic.Direction;
 import logic.GameMap;
 import logic.GameState;
+import logic.Level;
 import logic.Location;
-import logic.MapObject;
 import logic.Snake;
 
 public class GameFieldPanel extends JPanel {
@@ -41,13 +41,7 @@ public class GameFieldPanel extends JPanel {
     this.game = game;
     this.parent = parent;
 
-    paintedMap = new Cell[this.game.map.width()][this.game.map.height()];
-    initializePaintedMap(game.map);
-
-    setPreferredSize(new Dimension(this.game.map.width() * (cellWidth + xGap),
-        this.game.map.height() * (cellHeight + yGap)));
-    setFocusable(true);
-    requestFocusInWindow();
+    initializeWindow(this.game);
 
     addKeyListener(new KeyAdapter() {
       @Override
@@ -71,6 +65,16 @@ public class GameFieldPanel extends JPanel {
         g.fillRect(cell.x, cell.y, cell.width, cell.height);
       }
     }
+  }
+
+  private void initializeWindow(GameState game) {
+    paintedMap = new Cell[game.map.width()][game.map.height()];
+    initializePaintedMap(game.map);
+
+    setPreferredSize(new Dimension(game.map.width() * (cellWidth + xGap),
+        game.map.height() * (cellHeight + yGap)));
+    setFocusable(true);
+    requestFocusInWindow();
   }
 
   private void endGame() {
@@ -98,6 +102,14 @@ public class GameFieldPanel extends JPanel {
 
   private void restartGame() {
     game = new GameState(game.level);
+    initializeWindow(game);
+    gameIsPaused = false;
+    repaint();
+  }
+
+  void startNewGame(Level level) {
+    game = new GameState(level);
+    initializeWindow(game);
     gameIsPaused = false;
     repaint();
   }
