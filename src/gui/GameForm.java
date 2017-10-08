@@ -1,5 +1,10 @@
 package gui;
 
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
@@ -23,10 +28,41 @@ public class GameForm implements Runnable {
 
   private void initializeMenu(){
     menuBar = new JMenuBar();
-    JMenu menu = new JMenu("Choose level");
-    menuBar.add(menu);
-    addLevelMenu(menu, Level.zero);
-    addLevelMenu(menu, Level.one);
+    JMenu chooseLevelMenu = new JMenu("Choose level");
+    menuBar.add(chooseLevelMenu);
+    addLevelMenu(chooseLevelMenu, Level.zero);
+    addLevelMenu(chooseLevelMenu, Level.one);
+
+    JMenu gameMenu = new JMenu("Game");
+    menuBar.add(gameMenu);
+
+    JMenuItem save = new JMenuItem("Save");
+    save.addActionListener(arg0 -> {
+      try {
+        ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream("save"));
+        out.writeObject(gameFieldPanel.game); //Write byte stream to file system.
+        out.close();
+      } catch (IOException ex) {
+        ex.printStackTrace();
+      }
+    });
+
+    JMenuItem download = new JMenuItem("Download ");
+    download.addActionListener(arg0 -> {
+      try {
+        ObjectInputStream in = new ObjectInputStream(new FileInputStream("save"));
+        GameState newGame = (GameState) in.readObject();
+        in.close();
+        this.game = newGame;
+        gameFieldPanel.startNewGame(game);
+        frame.pack();
+      } catch (IOException | ClassNotFoundException ex) {
+        ex.printStackTrace();
+      }
+    });
+
+    gameMenu.add(save);
+    gameMenu.add(download);
   }
 
   private void addLevelMenu(JMenu menu, Level level) {

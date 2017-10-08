@@ -1,9 +1,10 @@
 package logic;
 
+import java.io.Serializable;
 import java.util.ArrayDeque;
 import java.util.Random;
 
-public class Snake {
+public class Snake implements Serializable {
 
   public ArrayDeque<Location> body = new ArrayDeque<>();
   public Direction direction = Direction.Stop;

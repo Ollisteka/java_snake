@@ -1,8 +1,9 @@
 package logic;
 
+import java.io.Serializable;
 import java.util.Random;
 
-public class GameMap {
+public class GameMap implements Serializable {
 
   boolean isCycled = true;
   int foodCount;

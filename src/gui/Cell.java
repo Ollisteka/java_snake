@@ -1,11 +1,12 @@
 package gui;
 
 import java.awt.Color;
+import java.io.Serializable;
 import logic.GameState;
 import logic.Location;
 import logic.MapObject;
 
-class Cell {
+class Cell implements Serializable {
 
   int x;
   int y;

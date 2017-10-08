@@ -1,6 +1,8 @@
 package logic;
 
-public class Food {
+import java.io.Serializable;
+
+public class Food implements Serializable {
 
   public int value;
   public boolean poison = false;

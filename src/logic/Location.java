@@ -1,6 +1,8 @@
 package logic;
 
-public class Location {
+import java.io.Serializable;
+
+public class Location implements Serializable {
 
   public int x;
   public int y;

@@ -24,7 +24,7 @@ public class GameFieldPanel extends JPanel {
   private int yGap = 2;
 
   private Cell[][] paintedMap;
-  private GameState game;
+  public GameState game;
 
   private JFrame parent;
 
@@ -110,6 +110,13 @@ public class GameFieldPanel extends JPanel {
   void startNewGame(Level level) {
     game = new GameState(level);
     initializeWindow(game);
+    gameIsPaused = false;
+    repaint();
+  }
+
+  void startNewGame(GameState game) {
+    this.game = game;
+    initializeWindow(this.game);
     gameIsPaused = false;
     repaint();
   }
