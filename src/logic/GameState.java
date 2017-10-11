@@ -38,6 +38,10 @@ public class GameState implements Serializable {
       case one:
         makeLevelOne();
         break;
+      case two:
+        makeLevelOne();
+        noPoison = false;
+        break;
       default:
         noPoison = true;
         makeLevelZero();
@@ -47,7 +51,6 @@ public class GameState implements Serializable {
   }
 
   private void makeLevelZero() {
-    //map = new GameMap(width, height, true);
     map = Level.zero.drawMap(10, 10);
     snake = new Snake(3, 3);
     map.addSnake(snake);

@@ -21,6 +21,13 @@ public enum Level implements Serializable {
 
       return map;
     }
+  },
+  two {
+    @Override
+    public GameMap drawMap(int width, int height) {
+      GameMap map = new GameMap(width, height, false);
+      return map;
+    }
   };
 //  zero,
 //  one
