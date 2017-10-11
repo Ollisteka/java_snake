@@ -23,9 +23,7 @@ public enum Level implements Serializable {
     public GameMap drawMap(int width, int height, GameState game) {
       GameMap map = new GameMap(width, height, false);
 
-      MapObject obj = new MapObject();
-      obj.wall = new Wall();
-      map.setObject(1, 1, obj);
+      map.setObject(1, 1, new MapObject(new Wall()));
 
       game.snake = new Snake(3, 3);
       map.addSnake(game.snake);

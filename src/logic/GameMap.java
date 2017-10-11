@@ -22,22 +22,24 @@ public class GameMap implements Serializable {
     initializeDefaultMap();
   }
 
-  public void initializeDefaultMap() {
-    for (int x = 0; x < width(); x++) {
-      for (int y = 0; y < height(); y++) {
+  private void initializeDefaultMap() {
+    for (int x = 0; x < getWidth(); x++) {
+      for (int y = 0; y < getHeight(); y++) {
         this.setObject(x, y, new MapObject());
       }
     }
   }
 
-  public int width() { return map.length; }
+  public int getWidth() {
+    return map.length;
+  }
 
-  public int height() {
+  public int getHeight() {
     return map[1].length;
   }
 
   public void setObject(int x, int y, MapObject object) {
-    if (x >= width() || y >= height() || x < 0 || y < 0)
+    if (x >= getWidth() || y >= getHeight() || x < 0 || y < 0)
       throw new IndexOutOfBoundsException();
     map[x][y] = object;
   }
@@ -47,7 +49,7 @@ public class GameMap implements Serializable {
   }
 
   public MapObject getObject(int x, int y) {
-    if (x >= width() || y >= height() || x < 0 || y < 0)
+    if (x >= getWidth() || y >= getHeight() || x < 0 || y < 0)
       throw new IndexOutOfBoundsException();
     return map[x][y];
   }
@@ -58,11 +60,11 @@ public class GameMap implements Serializable {
 
   Location generateFood(boolean poison) {
     while (true) {
-      int x = rnd.nextInt(width() - 1);
-      int y = rnd.nextInt(height() - 1);
-      if (map[x][y].snake == null && map[x][y].wall == null && map[x][y].food == null) {
+      int x = rnd.nextInt(getWidth() - 1);
+      int y = rnd.nextInt(getHeight() - 1);
+      if (this.getObject(x, y).isFree()) {
         Location result = new Location(x, y);
-        map[x][y].food = new Food(result, 10, poison);
+        this.setObject(x, y, new MapObject(new Food(result, 10, poison)));
         if (!poison)
           foodCount++;
         else
@@ -74,21 +76,18 @@ public class GameMap implements Serializable {
 
   public void addSnake(Snake snake) {
     MapObject obj = this.getObject(snake.getHead());
-    if (obj.snake != null
-        || obj.wall != null
-        || obj.food != null)
+    if (!obj.isFree())
         return;
-    obj.snake = snake;
+    this.setObject(snake.getHead(), new MapObject(snake));
   }
 
   public void addFood(Food food) {
-    if (this.getObject(food.location).snake != null
-        || this.getObject(food.location).wall != null
-        || this.getObject(food.location).food != null) {
-      generateFood(false);
+    Location location = food.location;
+    if (!this.getObject(location).isFree()) {
+      generateFood(food.isPoison());
       return;
     }
-    this.getObject(food.location).food = food;
+    this.setObject(location, new MapObject(food));
     if (!food.isPoison()) {
       foodCount++;
     } else {

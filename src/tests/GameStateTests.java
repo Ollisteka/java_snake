@@ -1,5 +1,3 @@
-package tests;
-
 import logic.Direction;
 import logic.Food;
 import logic.GameMap;

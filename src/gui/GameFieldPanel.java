@@ -58,8 +58,8 @@ public class GameFieldPanel extends JPanel {
   @Override
   public void paintComponent(Graphics g) {
     super.paintComponent(g);
-    for (int i = 0; i < game.map.width(); i++) {
-      for (int j = 0; j < game.map.height(); j++) {
+    for (int i = 0; i < game.map.getWidth(); i++) {
+      for (int j = 0; j < game.map.getHeight(); j++) {
         Cell cell = paintedMap[i][j];
         cell.UpdateColour(new Location(i, j), game);
         g.setColor(cell.color);
@@ -69,11 +69,11 @@ public class GameFieldPanel extends JPanel {
   }
 
   private void initializeWindow(GameState game) {
-    paintedMap = new Cell[game.map.width()][game.map.height()];
+    paintedMap = new Cell[game.map.getWidth()][game.map.getHeight()];
     initializePaintedMap(game.map);
 
-    setPreferredSize(new Dimension(game.map.width() * (cellWidth + xGap),
-        game.map.height() * (cellHeight + yGap)));
+    setPreferredSize(new Dimension(game.map.getWidth() * (cellWidth + xGap),
+        game.map.getHeight() * (cellHeight + yGap)));
     setFocusable(true);
     requestFocusInWindow();
   }
@@ -152,8 +152,8 @@ public class GameFieldPanel extends JPanel {
   private void initializePaintedMap(GameMap gameMap) {
     int x = 0;
     int y = 0;
-    for (int i = 0; i < gameMap.width(); i++) {
-      for (int j = 0; j < gameMap.height(); j++) {
+    for (int i = 0; i < gameMap.getWidth(); i++) {
+      for (int j = 0; j < gameMap.getHeight(); j++) {
         Cell cellToAdd = new Cell(x, y, cellWidth, cellHeight);
         cellToAdd.UpdateColour(new Location(i,j), game);
         paintedMap[j][i] = cellToAdd;

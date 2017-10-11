@@ -35,15 +35,15 @@ public class Snake implements Serializable {
 
   public void move(Direction dir, GameState game) {
     Location newHead = findNextLocation(getHead(), dir, game);
-    if (willLose(newHead, game) || game.map.width() * game.map.height() == body.size()) {
+    if (willLose(newHead, game) || game.map.getWidth() * game.map.getHeight() == body.size()) {
       game.isOver = true;
       return;
     }
     body.addFirst(newHead);
-    game.map.getObject(newHead).snake = this; //добавили голову на карту
     if (canEat(newHead, game)) {
       eat(newHead, game);
     }
+    game.map.setObject(newHead, new MapObject(this)); //добавили голову на карту
     deleteTail(game);
   }
 
@@ -72,8 +72,8 @@ public class Snake implements Serializable {
     }
     if (game.map.isCycled) {
       return new Location(
-          (oldLocation.x + dX + game.map.width()) % game.map.width(),
-          (oldLocation.y + dY + game.map.height()) % game.map.height());
+          (oldLocation.x + dX + game.map.getWidth()) % game.map.getWidth(),
+          (oldLocation.y + dY + game.map.getHeight()) % game.map.getHeight());
     }
     return new Location(oldLocation.x + dX, oldLocation.y + dY);
   }
@@ -81,17 +81,17 @@ public class Snake implements Serializable {
   private void deleteTail(GameState game) {
     if (body.size() > getLength()) {
       Location leftover = body.removeLast();
-      game.map.getObject(leftover).snake = null;
+      game.map.setObject(leftover, new MapObject());
     }
   }
 
   private boolean canEat(Location location, GameState game) {
-    return game.map.getObject(location).food != null;
+    return game.map.getObject(location).canEat();
   }
 
   private void eat(Location location, GameState game) {
-    Food food = game.map.getObject(location).food;
-    game.map.getObject(location).food = null;
+    Food food = game.map.getObject(location).getFood();
+    game.map.setObject(location, new MapObject());
     if (!food.isPoison()) {
       game.map.foodCount--;
       setLength(length + 1);
@@ -118,7 +118,7 @@ public class Snake implements Serializable {
   private boolean willLose(Location location, GameState game) {
     try {
       MapObject itemInNextPos = game.map.getObject(location);
-      if (itemInNextPos.wall != null || itemInNextPos.snake != null) {
+      if (itemInNextPos.willKillTheSnake()) {
         return true;
       }
     } catch (IndexOutOfBoundsException exc) {

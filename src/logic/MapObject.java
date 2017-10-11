@@ -3,9 +3,26 @@ package logic;
 import java.io.Serializable;
 
 public class MapObject implements Serializable {
-  public Snake snake;
-  public Food food;
-  public Wall wall;
+
+  private Snake snake;
+  private Food food;
+  private Wall wall;
+
+  public MapObject() {
+
+  }
+
+  public MapObject(Snake snake) {
+    this.snake = snake;
+  }
+
+  public MapObject(Food food) {
+    this.food = food;
+  }
+
+  public MapObject(Wall wall) {
+    this.wall = wall;
+  }
 
   public String getDrawable(Location location) {
     if (this.snake != null) {
@@ -19,5 +36,21 @@ public class MapObject implements Serializable {
     } else {
       return "nothing";
     }
+  }
+
+  public boolean willKillTheSnake() {
+    return snake != null || wall != null;
+  }
+
+  public boolean canEat() {
+    return food != null;
+  }
+
+  public boolean isFree() {
+    return snake == null && food == null && wall == null;
+  }
+
+  public Food getFood() {
+    return food;
   }
 }
