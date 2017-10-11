@@ -92,7 +92,7 @@ public class Snake implements Serializable {
   private void eat(Location location, GameState game) {
     Food food = game.map.getObject(location).food;
     game.map.getObject(location).food = null;
-    if (!food.poison) {
+    if (!food.isPoison()) {
       game.map.foodCount--;
       setLength(length + 1);
     } else {
@@ -101,7 +101,7 @@ public class Snake implements Serializable {
       deleteTail(game);
     }
     makeFood(game);
-    game.scores += food.value;
+    game.scores += food.getValue();
   }
 
   private void makeFood(GameState game) {

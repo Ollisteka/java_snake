@@ -89,7 +89,7 @@ public class GameMap implements Serializable {
       return;
     }
     this.getObject(food.location).food = food;
-    if (!food.poison) {
+    if (!food.isPoison()) {
       foodCount++;
     } else {
       poisonCount++;
