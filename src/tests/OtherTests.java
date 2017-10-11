@@ -1,6 +1,9 @@
 package tests;
 
-import logic.*;
+import logic.GameState;
+import logic.Level;
+import logic.Location;
+import logic.Snake;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -34,7 +37,7 @@ public class OtherTests {
     }
 
     @Test
-    public void testLoationsEqual(){
+    public void testLocationsEqual() {
         Location first = new Location(1,1);
         Location second = new Location(1,1);
         Assert.assertEquals(first,second);

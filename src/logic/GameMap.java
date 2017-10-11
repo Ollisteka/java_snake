@@ -5,8 +5,8 @@ import java.util.Random;
 
 public class GameMap implements Serializable {
 
-  boolean isCycled = true;
-  int foodCount;
+  public boolean isCycled = true;
+  public int foodCount;
   int poisonCount;
   private MapObject[][] map;
   private Random rnd = new Random();
