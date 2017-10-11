@@ -11,6 +11,10 @@ public enum Level implements Serializable {
       game.snake = new Snake(3, 3);
       map.addSnake(game.snake);
       map.generateFood(false);
+
+      game.level = Level.zero;
+      game.noPoison = true;
+
       return map;
     }
   },
@@ -27,6 +31,8 @@ public enum Level implements Serializable {
       map.addSnake(game.snake);
       map.generateFood(false);
 
+      game.level = Level.one;
+
       return map;
     }
   },
@@ -39,6 +45,8 @@ public enum Level implements Serializable {
       game.snake = new Snake(3, 3);
       map.addSnake(game.snake);
       map.generateFood(false);
+
+      game.level = Level.two;
 
       return map;
     }

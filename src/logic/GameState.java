@@ -36,31 +36,15 @@ public class GameState implements Serializable {
   public GameState(Level level) {
     switch (level) {
       case one:
-        makeLevelOne();
+        map = Level.one.drawMap(15, 15, this);
         break;
       case two:
-        makeLevelTwo();
+        map = Level.two.drawMap(12, 12, this);
         break;
       default:
-        noPoison = true;
-        makeLevelZero();
+        map = Level.zero.drawMap(10, 10, this);
         break;
     }
     isOver = false;
-  }
-
-  private void makeLevelZero() {
-    map = Level.zero.drawMap(10, 10, this);
-    level = Level.zero;
-  }
-
-  private void makeLevelOne() {
-    map = Level.one.drawMap(15, 15, this);
-    level = Level.one;
-  }
-
-  private void makeLevelTwo() {
-    map = Level.two.drawMap(12, 12, this);
-    level = Level.two;
   }
 }

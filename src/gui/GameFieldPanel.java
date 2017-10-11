@@ -52,6 +52,7 @@ public class GameFieldPanel extends JPanel {
     timer = new Timer(100, this::makeMove);
     timer.start();
 
+
   }
 
   @Override

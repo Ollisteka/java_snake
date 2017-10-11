@@ -24,7 +24,6 @@ public class OtherTests {
         Assert.assertNotNull(myState.map.getObject(3,3).snake);
         Assert.assertEquals(15,myState.map.height());
         Assert.assertEquals(15,myState.map.width());
-        Assert.assertEquals(Level.one,myState.level);
     }
 
     @Test
@@ -33,7 +32,6 @@ public class OtherTests {
         Assert.assertNotNull(myState.map.getObject(3,3).snake);
         Assert.assertEquals(10,myState.map.height());
         Assert.assertEquals(10,myState.map.width());
-        Assert.assertEquals(Level.zero,myState.level);
     }
 
     @Test
