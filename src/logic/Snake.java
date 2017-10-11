@@ -2,12 +2,17 @@ package logic;
 
 import java.io.Serializable;
 import java.util.ArrayDeque;
+import java.util.Deque;
 import java.util.Random;
 
 public class Snake implements Serializable {
 
-  public ArrayDeque<Location> body = new ArrayDeque<>();
-  public Direction direction = Direction.Stop;
+  private Deque<Location> body = new ArrayDeque<>();
+  private Direction direction = Direction.Stop;
+
+  public Direction getDirection() {
+    return direction;
+  }
   private Random rnd = new Random();
   private int length = 1;
 
@@ -23,7 +28,7 @@ public class Snake implements Serializable {
     return length;
   }
 
-  public void setLength(int value) {
+  private void setLength(int value) {
     if (value > 0)
       length = value;
   }
@@ -113,8 +118,7 @@ public class Snake implements Serializable {
   private boolean willLose(Location location, GameState game) {
     try {
       MapObject itemInNextPos = game.map.getObject(location);
-      if (itemInNextPos.wall != null && !itemInNextPos.wall.canGoThrough
-          || itemInNextPos.snake != null) {
+      if (itemInNextPos.wall != null || itemInNextPos.snake != null) {
         return true;
       }
     } catch (IndexOutOfBoundsException exc) {

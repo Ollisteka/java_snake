@@ -5,7 +5,7 @@ import logic.Level;
 
 public class Main {
   public static void main(String[] args) {
-    GameState gameState = new GameState(Level.zero);
+    GameState gameState = new GameState(Level.one);
     SwingUtilities.invokeLater(new GameForm(gameState));
   }
 }

@@ -1,6 +1,11 @@
 package tests;
 
-import logic.*;
+import logic.Direction;
+import logic.Food;
+import logic.GameMap;
+import logic.GameState;
+import logic.Location;
+import logic.Snake;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -18,7 +23,7 @@ public class GameStateTests {
 
     @Test
     public void SnakeFromConstructorTest() {
-        Assert.assertEquals(1, Game.snake.body.size());
+      //Assert.assertEquals(1, Game.snake.body.size());
         Assert.assertEquals(new Location(2, 2), Game.snake.getHead());
         Assert.assertEquals(1, Game.snake.getLength());
         Assert.assertEquals(false, Game.map.isCycled);
@@ -28,19 +33,19 @@ public class GameStateTests {
     public void MovementTests() {
         Game.snake.move(Direction.Left, Game);
         Assert.assertEquals(new Location(1, 2), Game.snake.getHead());
-        Assert.assertEquals(Direction.Left, Game.snake.direction);
+      Assert.assertEquals(Direction.Left, Game.snake.getDirection());
 
         Game.snake.move(Direction.Up, Game);
         Assert.assertEquals(new Location(1, 1), Game.snake.getHead());
-        Assert.assertEquals(Direction.Up, Game.snake.direction);
+      Assert.assertEquals(Direction.Up, Game.snake.getDirection());
 
         Game.snake.move(Direction.Right, Game);
         Assert.assertEquals(new Location(2, 1), Game.snake.getHead());
-        Assert.assertEquals(Direction.Right, Game.snake.direction);
+      Assert.assertEquals(Direction.Right, Game.snake.getDirection());
 
         Game.snake.move(Direction.Down, Game);
         Assert.assertEquals(new Location(2, 2), Game.snake.getHead());
-        Assert.assertEquals(Direction.Down, Game.snake.direction);
+      Assert.assertEquals(Direction.Down, Game.snake.getDirection());
     }
 
     @Test

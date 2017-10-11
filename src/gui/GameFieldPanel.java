@@ -137,10 +137,10 @@ public class GameFieldPanel extends JPanel {
     } else if (key == KeyEvent.VK_LEFT || key == KeyEvent.VK_A) {
       snake.move(Direction.Left, game);
       timerTick = 0;
-    } else if (snake.direction != Direction.Stop
+    } else if (snake.getDirection() != Direction.Stop
         && key == KeyEvent.KEY_LOCATION_UNKNOWN && timerTick != 0
         && timerTick % magic == 0) {
-      snake.move(snake.direction, game);
+      snake.move(snake.getDirection(), game);
       timerTick = 0;
     } else {
       timerTick++;

@@ -4,8 +4,8 @@ import java.io.Serializable;
 
 public class Location implements Serializable {
 
-  public int x;
-  public int y;
+  int x;
+  int y;
 
   public Location(int x, int y) {
     this.x = x;

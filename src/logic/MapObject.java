@@ -6,4 +6,16 @@ public class MapObject implements Serializable {
   public Snake snake;
   public Food food;
   public Wall wall;
+
+  public String getDrawable(Location location) {
+    if (this.snake != null) {
+      return this.snake.getHead().equals(location) ? "head" : "snake";
+    } else if (this.food != null && !this.food.poison) {
+      return "food";
+    } else if (this.wall != null) {
+      return "wall";
+    } else {
+      return "nothing";
+    }
+  }
 }

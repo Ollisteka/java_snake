@@ -13,13 +13,21 @@ public class GameMap implements Serializable {
 
   public GameMap(int width, int height) {
     map = new MapObject[width][height];
-    makeLevelOne();
+    initializeDefaultMap();
   }
 
   public GameMap(int width, int height, boolean cycled) {
     map = new MapObject[width][height];
     isCycled = cycled;
-    makeLevelOne();
+    initializeDefaultMap();
+  }
+
+  public void initializeDefaultMap() {
+    for (int x = 0; x < width(); x++) {
+      for (int y = 0; y < height(); y++) {
+        this.setObject(x, y, new MapObject());
+      }
+    }
   }
 
   public int width() { return map.length; }
@@ -65,13 +73,12 @@ public class GameMap implements Serializable {
   }
 
   public void addSnake(Snake snake) {
-    for(Location point : snake.body)
-      if (this.getObject(point).snake != null
-              || this.getObject(point).wall != null
-              || this.getObject(point).food != null)
+    MapObject obj = this.getObject(snake.getHead());
+    if (obj.snake != null
+        || obj.wall != null
+        || obj.food != null)
         return;
-    for(Location point : snake.body)
-      this.getObject(point).snake = snake;
+    obj.snake = snake;
   }
 
   public void addFood(Food food) {
@@ -86,14 +93,6 @@ public class GameMap implements Serializable {
       foodCount++;
     } else {
       poisonCount++;
-    }
-  }
-
-  void makeLevelOne() {
-    for (int x = 0; x < width(); x++) {
-      for (int y = 0; y < height(); y++) {
-        this.setObject(x, y, new MapObject());
-      }
     }
   }
 }

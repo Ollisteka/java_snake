@@ -1,6 +1,11 @@
 package tests;
 
-import logic.*;
+import logic.Direction;
+import logic.Food;
+import logic.GameState;
+import logic.Location;
+import logic.MapObject;
+import logic.Snake;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -11,8 +16,8 @@ public class SnakeTests {
     Snake snake = new Snake(1, 2);
     Assert.assertEquals(new Location(1, 2), snake.getHead());
     Assert.assertEquals(1, snake.getLength());
-    Assert.assertEquals(Direction.Stop, snake.direction);
-    Assert.assertEquals(1, snake.body.size());
+    Assert.assertEquals(Direction.Stop, snake.getDirection());
+    Assert.assertEquals(1, snake.getLength());
   }
 
   @Test
