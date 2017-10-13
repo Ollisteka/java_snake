@@ -24,9 +24,10 @@ public class GameState implements Serializable {
     map.addSnake(this.snake);
   }
 
-  public GameState(GameMap map, Snake snake, Food food) {
+  // координаты x y нужны для добавления еды на эту локацию
+  public GameState(GameMap map, Snake snake, Food food, Location location) {
     this.map = map;
-    this.map.addFood(food);
+    this.map.addFood(food, location.x, location.y);
     this.map.addSnake(snake);
     this.snake = snake;
     isOver = false;

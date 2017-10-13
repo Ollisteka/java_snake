@@ -1,6 +1,5 @@
 import logic.Food;
 import logic.GameMap;
-import logic.Location;
 import logic.MapObject;
 import logic.Wall;
 import org.junit.Assert;
@@ -18,10 +17,9 @@ public class GameMapTests {
     @Test
     public void testSetGetObject(){
         GameMap myMap = new GameMap(5,7);
-        MapObject myObj = new MapObject(new Wall());
-        myMap.setObject(1,1,myObj);
+        myMap.setObject(new MapObject(new Wall(), 1, 1));
         Assert.assertTrue(myMap.getObject(1, 1).willKillTheSnake());
-        Assert.assertTrue(myMap.getObject(1, 1).canEat());
+        Assert.assertFalse(myMap.getObject(1, 1).canEat());
     }
 
 //    @Test
@@ -37,9 +35,9 @@ public class GameMapTests {
     @Test
     public void testAddFood(){
         GameMap myMap = new GameMap(5,7);
-        myMap.addFood(new Food(new Location(1,1),10, false));
+        myMap.addFood(new Food(10, false), 1, 1);
         Assert.assertTrue(myMap.getObject(1, 1).canEat());
-        myMap.addFood(new Food(new Location(1,1),10, false));
+        myMap.addFood(new Food(10, false), 1, 1);
         boolean generatedFood = false;
         for (int i = 0; i < myMap.getHeight(); i++)
             for (int j = 0; j < myMap.getWidth(); j++)

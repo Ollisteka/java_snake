@@ -43,7 +43,7 @@ public class Snake implements Serializable {
     if (canEat(newHead, game)) {
       eat(newHead, game);
     }
-    game.map.setObject(newHead, new MapObject(this)); //добавили голову на карту
+    game.map.setObject(new MapObject(this, newHead.x, newHead.y)); //добавили голову на карту
     deleteTail(game);
   }
 
@@ -81,7 +81,7 @@ public class Snake implements Serializable {
   private void deleteTail(GameState game) {
     if (body.size() > getLength()) {
       Location leftover = body.removeLast();
-      game.map.setObject(leftover, new MapObject());
+      game.map.setObject(new MapObject(leftover));
     }
   }
 
@@ -91,7 +91,7 @@ public class Snake implements Serializable {
 
   private void eat(Location location, GameState game) {
     Food food = game.map.getObject(location).getFood();
-    game.map.setObject(location, new MapObject());
+    game.map.setObject(new MapObject(location));
     if (!food.isPoison()) {
       game.map.foodCount--;
       setLength(length + 1);

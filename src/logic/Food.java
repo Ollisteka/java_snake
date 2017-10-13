@@ -6,7 +6,6 @@ public class Food implements Serializable {
 
   private int value;
   private boolean poison = false;
-  public Location location;
 
   public boolean isPoison() {
     return poison;
@@ -16,8 +15,7 @@ public class Food implements Serializable {
     return value;
   }
 
-  public Food(Location loc, int val, boolean poison) {
-    location = loc;
+  public Food(int val, boolean poison) {
     if (poison) {
       value = -val;
     } else {

@@ -11,7 +11,7 @@ public class GameStateTests {
     public GameState Game = new GameState(
             new GameMap(5, 5, false),
             new Snake(2, 2),
-            new Food(new Location(2, 3), 10, false));
+        new Food(10, false), new Location(2, 3));
 
     @Test
     public void GameStateConstructorTest() {
@@ -76,7 +76,8 @@ public class GameStateTests {
         GameState Game = new GameState(
                 new GameMap(5, 5, true),
                 new Snake(2, 2),
-                new Food(new Location(2, 3), 10, true));
+            new Food(10, true),
+            new Location(2, 3));
 
         Game.snake.move(Direction.Down, Game);
         Assert.assertEquals(new Location(2, 3), Game.snake.getHead());

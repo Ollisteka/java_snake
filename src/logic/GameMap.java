@@ -25,7 +25,7 @@ public class GameMap implements Serializable {
   private void initializeDefaultMap() {
     for (int x = 0; x < getWidth(); x++) {
       for (int y = 0; y < getHeight(); y++) {
-        this.setObject(x, y, new MapObject());
+        this.setObject(new MapObject(x, y));
       }
     }
   }
@@ -38,14 +38,12 @@ public class GameMap implements Serializable {
     return map[1].length;
   }
 
-  public void setObject(int x, int y, MapObject object) {
+  public void setObject(MapObject object) {
+    int x = object.getLocation().x;
+    int y = object.getLocation().y;
     if (x >= getWidth() || y >= getHeight() || x < 0 || y < 0)
       throw new IndexOutOfBoundsException();
     map[x][y] = object;
-  }
-
-  public void setObject(Location location, MapObject object) {
-    this.setObject(location.x, location.y, object);
   }
 
   public MapObject getObject(int x, int y) {
@@ -63,31 +61,31 @@ public class GameMap implements Serializable {
       int x = rnd.nextInt(getWidth() - 1);
       int y = rnd.nextInt(getHeight() - 1);
       if (this.getObject(x, y).isFree()) {
-        Location result = new Location(x, y);
-        this.setObject(x, y, new MapObject(new Food(result, 10, poison)));
+        this.setObject(new MapObject(new Food(10, poison), x, y));
         if (!poison)
           foodCount++;
         else
           poisonCount++;
-        return result;
+        return new Location(x, y);
       }
     }
   }
 
   public void addSnake(Snake snake) {
-    MapObject obj = this.getObject(snake.getHead());
+    Location location = snake.getHead();
+    MapObject obj = this.getObject(location);
     if (!obj.isFree())
         return;
-    this.setObject(snake.getHead(), new MapObject(snake));
+    this.setObject(new MapObject(snake, location.x, location.y));
   }
 
-  public void addFood(Food food) {
-    Location location = food.location;
+  public void addFood(Food food, int x, int y) {
+    Location location = new Location(x, y);
     if (!this.getObject(location).isFree()) {
       generateFood(food.isPoison());
       return;
     }
-    this.setObject(location, new MapObject(food));
+    this.setObject(new MapObject(food, x, y));
     if (!food.isPoison()) {
       foodCount++;
     } else {

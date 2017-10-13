@@ -34,7 +34,7 @@ public class SnakeTests {
   @Test
   public void testEatFood(){
     GameState game = new GameState(10, 10, new Snake(0, 0));
-    game.map.setObject(1, 0, new MapObject(new Food(new Location(1, 0), 10, false)));
+    game.map.setObject(new MapObject(new Food(10, false), 1, 0));
     game.snake.move(Direction.Right, game);
     // Assert.assertNotNull(game.map.getObject(0, 0).snake);
     Assert.assertEquals(2, game.snake.getLength());

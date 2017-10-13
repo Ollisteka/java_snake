@@ -36,6 +36,6 @@ class Cell implements Serializable {
 
   void UpdateColour(Location location, GameState game) {
     MapObject smth = game.map.getObject(location);
-    color = colors.get(smth.getDrawable(location));
+    color = colors.get(smth.getDrawable());
   }
 }

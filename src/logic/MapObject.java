@@ -8,23 +8,36 @@ public class MapObject implements Serializable {
   private Food food;
   private Wall wall;
 
-  public MapObject() {
+  private Location location;
 
+  public MapObject(int x, int y) {
+    location = new Location(x, y);
   }
 
-  public MapObject(Snake snake) {
+  public MapObject(Location loc) {
+    location = loc;
+  }
+
+  public MapObject(Snake snake, int x, int y) {
     this.snake = snake;
+    location = new Location(x, y);
   }
 
-  public MapObject(Food food) {
+  public MapObject(Food food, int x, int y) {
     this.food = food;
+    location = new Location(x, y);
   }
 
-  public MapObject(Wall wall) {
+  public MapObject(Wall wall, int x, int y) {
     this.wall = wall;
+    location = new Location(x, y);
   }
 
-  public String getDrawable(Location location) {
+  public Location getLocation() {
+    return location;
+  }
+
+  public String getDrawable() {
     if (this.snake != null) {
       return this.snake.getHead().equals(location) ? "head" : "snake";
     } else if (this.food != null && !this.food.isPoison()) {
