@@ -24,7 +24,7 @@ public class GameStateTests {
       //Assert.assertEquals(1, Game.snake.body.size());
         Assert.assertEquals(new Location(2, 2), Game.snake.getHead());
         Assert.assertEquals(1, Game.snake.getLength());
-        Assert.assertEquals(false, Game.map.isCycled);
+        Assert.assertEquals(false, Game.map.isCycled());
     }
 
     @Test
@@ -52,7 +52,7 @@ public class GameStateTests {
         Assert.assertEquals(new Location(2, 3), Game.snake.getHead());
         Assert.assertEquals(2, Game.snake.getLength());
         Assert.assertEquals(10, Game.scores);
-        Assert.assertEquals(1, Game.map.foodCount);
+        Assert.assertEquals(1, Game.map.getFoodCount());
         Assert.assertEquals(false, Game.isOver);
 
     }

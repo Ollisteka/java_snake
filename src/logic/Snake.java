@@ -70,7 +70,7 @@ public class Snake implements Serializable {
       default:
         break;
     }
-    if (game.map.isCycled) {
+    if (game.map.isCycled()) {
       return new Location(
           (oldLocation.x + dX + game.map.getWidth()) % game.map.getWidth(),
           (oldLocation.y + dY + game.map.getHeight()) % game.map.getHeight());
@@ -93,10 +93,10 @@ public class Snake implements Serializable {
     Food food = game.map.getObject(location).getFood();
     game.map.setObject(new MapObject(location));
     if (!food.isPoison()) {
-      game.map.foodCount--;
+      game.map.setFoodCount(game.map.getFoodCount() - 1);
       setLength(length + 1);
     } else {
-      game.map.poisonCount--;
+      game.map.setPoisonCount(game.map.getPoisonCount() - 1);
       setLength(length - 1);
       deleteTail(game);
     }
@@ -105,10 +105,10 @@ public class Snake implements Serializable {
   }
 
   private void makeFood(GameState game) {
-    while (game.map.foodCount == 0) {
+    while (game.map.getFoodCount() == 0) {
       int poison = rnd.nextInt();
 
-      if (game.noPoison || game.map.poisonCount == 1) {
+      if (game.noPoison || game.map.getPoisonCount() == 1) {
         poison = 1;
       }
       game.map.generateFood(poison % 3 == 0);

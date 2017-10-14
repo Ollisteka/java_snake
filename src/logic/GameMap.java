@@ -2,12 +2,31 @@ package logic;
 
 import java.io.Serializable;
 import java.util.Random;
+import lombok.Getter;
 
 public class GameMap implements Serializable {
 
-  public boolean isCycled = true;
-  public int foodCount;
-  int poisonCount;
+  @Getter
+  private boolean isCycled = true;
+  @Getter
+  private int foodCount;
+  @Getter
+  private int poisonCount;
+
+  public void setFoodCount(int foodCount) {
+    if (foodCount < 0) {
+      return;
+    }
+    this.foodCount = foodCount;
+  }
+
+  public void setPoisonCount(int poisonCount) {
+    if (poisonCount < 0) {
+      return;
+    }
+    this.poisonCount = poisonCount;
+  }
+
   private MapObject[][] map;
   private Random rnd = new Random();
 

@@ -1,6 +1,7 @@
 package logic;
 
 import java.io.Serializable;
+import lombok.Getter;
 
 public class MapObject implements Serializable {
 
@@ -8,6 +9,7 @@ public class MapObject implements Serializable {
   private Food food;
   private Wall wall;
 
+  @Getter
   private Location location;
 
   public MapObject(int x, int y) {
@@ -31,10 +33,6 @@ public class MapObject implements Serializable {
   public MapObject(Wall wall, int x, int y) {
     this.wall = wall;
     location = new Location(x, y);
-  }
-
-  public Location getLocation() {
-    return location;
   }
 
   public String getDrawable() {
