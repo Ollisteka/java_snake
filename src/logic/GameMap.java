@@ -9,7 +9,7 @@ public class GameMap implements Serializable {
   private int foodCount;
   private int poisonCount;
 
-    private MapObject[][] map;
+  private MapObject[][] map;
   private Random rnd = new Random();
 
   public GameMap(int width, int height) {
@@ -106,17 +106,17 @@ public class GameMap implements Serializable {
         return this.poisonCount;
     }
 
-    public MapObject[][] getMap() {
-        return this.map;
-    }
+    //    public MapObject[][] getMap() {
+//        return this.map;
+//    }
 
-    public Random getRnd() {
-        return this.rnd;
-    }
-
-    public void setCycled(boolean isCycled) {
-        this.isCycled = isCycled;
-    }
+//    public Random getRnd() {
+//        return this.rnd;
+//    }
+//
+//    public void setCycled(boolean isCycled) {
+//        this.isCycled = isCycled;
+//    }
 
     public void setFoodCount(int foodCount) {
         this.foodCount = foodCount;
@@ -126,11 +126,11 @@ public class GameMap implements Serializable {
         this.poisonCount = poisonCount;
     }
 
-    public void setMap(MapObject[][] map) {
-        this.map = map;
-    }
-
-    public void setRnd(Random rnd) {
-        this.rnd = rnd;
-    }
+//    public void setMap(MapObject[][] map) {
+//        this.map = map;
+//    }
+//
+//    public void setRnd(Random rnd) {
+//        this.rnd = rnd;
+//    }
 }

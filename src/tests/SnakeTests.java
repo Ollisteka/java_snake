@@ -35,6 +35,14 @@ public class SnakeTests {
     Assert.assertEquals(2, game.snake.getLength());
   }
 
+  @Test
+  public void testKill(){
+    GameState game = new GameState(10, 10, new Snake(0, 0));
+    game.map.setObject(new MapObject(new Wall(), 1, 0));
+    game.snake.move(Direction.Right, game);
+    Assert.assertTrue(game.isOver);
+  }
+
 //  @Test
 //  public void testGoAnotherSide(){
 //    GameState game = new GameState(10, 10, new Snake(0, 0));

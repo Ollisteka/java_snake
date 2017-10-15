@@ -15,11 +15,53 @@ public class GameStateTests {
     }
 
     @Test
+    public void testGameStateCreate() {
+        Snake mySnake= new Snake(1,4);
+        GameState myState = new GameState(5,6,mySnake);
+        // Assert.assertNotNull(myState.map.getObject(1,4).snake);
+        Assert.assertEquals(6, myState.map.getHeight());
+        Assert.assertEquals(5, myState.map.getWidth());
+    }
+
+    @Test
+    public void testGameStateWithLevelOne() {
+        GameState myState = new GameState(Level.one);
+        // Assert.assertNotNull(myState.map.getObject(3,3).snake);
+        Assert.assertEquals(15, myState.map.getHeight());
+        Assert.assertEquals(15, myState.map.getWidth());
+    }
+
+    @Test
+    public void testGameStateWithLevelZero() {
+        GameState myState = new GameState(Level.zero);
+        // Assert.assertNotNull(myState.map.getObject(3,3).snake);
+        Assert.assertEquals(10, myState.map.getHeight());
+        Assert.assertEquals(10, myState.map.getWidth());
+    }
+
+    @Test
+    public void testGameStateWithLevelTwo() {
+        GameState myState = new GameState(Level.two);
+        // Assert.assertNotNull(myState.map.getObject(3,3).snake);
+        Assert.assertEquals(12, myState.map.getHeight());
+        Assert.assertEquals(12, myState.map.getWidth());
+    }
+
+
+    @Test
     public void SnakeFromConstructorTest() {
       //Assert.assertEquals(1, Game.snake.body.size());
         Assert.assertEquals(new Location(2, 2), Game.snake.getHead());
         Assert.assertEquals(1, Game.snake.getLength());
         Assert.assertEquals(false, Game.map.isCycled());
+        GameState Game2 = new GameState(5,5,
+                new Snake(2, 2),
+                true);
+        Assert.assertEquals(new Location(2, 2), Game2.snake.getHead());
+        Assert.assertEquals(1, Game2.snake.getLength());
+        Assert.assertEquals(5, Game2.map.getHeight());
+        Assert.assertEquals(5, Game2.map.getWidth());
+        Assert.assertTrue(Game2.noPoison);
     }
 
     @Test

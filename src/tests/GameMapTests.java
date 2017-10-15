@@ -1,7 +1,4 @@
-import logic.Food;
-import logic.GameMap;
-import logic.MapObject;
-import logic.Wall;
+import logic.*;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -22,6 +19,17 @@ public class GameMapTests {
         Assert.assertFalse(myMap.getObject(1, 1).canEat());
     }
 
+    @Test(expected = IndexOutOfBoundsException.class)
+    public void GameMapGetWrong() {
+        GameMap gm = new GameMap(5, 5);
+        gm.getObject(-1, -1);
+    }
+
+    @Test(expected = IndexOutOfBoundsException.class)
+    public void GameMapSetWrong() {
+        GameMap gm = new GameMap(5, 5);
+        gm.setObject(new MapObject(1,6));
+    }
 //    @Test
 //    public void testAddSnake(){
 //        GameMap myMap = new GameMap(5,7);
@@ -37,12 +45,22 @@ public class GameMapTests {
         GameMap myMap = new GameMap(5,7);
         myMap.addFood(new Food(10, false), 1, 1);
         Assert.assertTrue(myMap.getObject(1, 1).canEat());
-        myMap.addFood(new Food(10, false), 1, 1);
+        myMap.addFood(new Food(10, true), 2, 1);
+        Assert.assertTrue(myMap.getObject(2, 1).getFood().isPoison());
+        Assert.assertEquals(1,myMap.getPoisonCount());
         boolean generatedFood = false;
         for (int i = 0; i < myMap.getHeight(); i++)
             for (int j = 0; j < myMap.getWidth(); j++)
-                if ((i != 1 || j != 1) && myMap.getObject(j, i).canEat())
+                if ((i != 1 || j != 1) && (i != 2 || j != 1) && myMap.getObject(j, i).canEat())
                     generatedFood = true;
         Assert.assertTrue(generatedFood);
+    }
+
+    @Test
+    public void GameMapSome(){
+        GameMap gm = new GameMap(5,5);
+        gm.setObject(new MapObject(new Wall(), 1,1));
+        gm.addSnake(new Snake(1,1));
+        Assert.assertNotNull(gm.getObject(1,1).getWall());
     }
 }

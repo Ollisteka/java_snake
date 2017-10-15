@@ -11,6 +11,8 @@ public class MapObject implements Serializable {
     private Food food;
     private Wall wall;
 
+    public Wall getWall() {return wall;}
+
     private Location location;
 
     public Location getLocation(){ return location;}
