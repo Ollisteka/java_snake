@@ -1,19 +1,12 @@
 package gui;
 
-import java.awt.Dimension;
-import java.awt.Graphics;
+import logic.*;
+
+import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.Timer;
-import logic.Direction;
-import logic.GameMap;
-import logic.GameState;
-import logic.Level;
-import logic.Location;
-import logic.Snake;
 
 public class GameFieldPanel extends JPanel {
 

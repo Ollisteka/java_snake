@@ -1,7 +1,8 @@
 import gui.GameForm;
-import javax.swing.SwingUtilities;
 import logic.GameState;
 import logic.Level;
+
+import javax.swing.*;
 
 public class Main {
   public static void main(String[] args) {

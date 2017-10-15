@@ -1,16 +1,10 @@
 package gui;
 
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import javax.swing.JFrame;
-import javax.swing.JMenu;
-import javax.swing.JMenuBar;
-import javax.swing.JMenuItem;
 import logic.GameState;
 import logic.Level;
+
+import javax.swing.*;
+import java.io.*;
 
 public class GameForm implements Runnable {
 

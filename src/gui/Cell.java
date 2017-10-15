@@ -1,12 +1,13 @@
 package gui;
 
-import java.awt.Color;
-import java.io.Serializable;
-import java.util.HashMap;
-import java.util.Map;
 import logic.GameState;
 import logic.Location;
 import logic.MapObject;
+
+import java.awt.*;
+import java.io.Serializable;
+import java.util.HashMap;
+import java.util.Map;
 
 class Cell implements Serializable {
 

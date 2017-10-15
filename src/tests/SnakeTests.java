@@ -1,9 +1,4 @@
-import logic.Direction;
-import logic.Food;
-import logic.GameState;
-import logic.Location;
-import logic.MapObject;
-import logic.Snake;
+import logic.*;
 import org.junit.Assert;
 import org.junit.Test;
 
