@@ -1,13 +1,12 @@
 package gui;
 
-import logic.GameState;
-import logic.Location;
-import logic.MapObject;
-
-import java.awt.*;
+import java.awt.Color;
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
+import logic.GameState;
+import logic.Location;
+import logic.MapObject;
 
 class Cell implements Serializable {
 
@@ -36,7 +35,7 @@ class Cell implements Serializable {
   }
 
   void UpdateColour(Location location, GameState game) {
-    MapObject smth = game.map.getObject(location);
+    MapObject smth = game.getMap().getObject(location);
     color = colors.get(smth.getDrawable());
   }
 }

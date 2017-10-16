@@ -31,15 +31,16 @@ public class Snake implements Serializable {
 
   public void move(Direction dir, GameState game) {
     Location newHead = findNextLocation(getHead(), dir, game);
-    if (willLose(newHead, game) || game.map.getWidth() * game.map.getHeight() == body.size()) {
-      game.isOver = true;
+    if (willLose(newHead, game) || game.getMap().getWidth() * game.getMap().getHeight() == body
+        .size()) {
+      game.setOver(true);
       return;
     }
     body.addFirst(newHead);
     if (canEat(newHead, game)) {
       eat(newHead, game);
     }
-    game.map
+    game.getMap()
         .setObject(new MapObject(this, newHead.getX(), newHead.getY())); //добавили голову на карту
     deleteTail(game);
   }
@@ -67,10 +68,10 @@ public class Snake implements Serializable {
       default:
         break;
     }
-    if (game.map.isCycled()) {
+    if (game.getMap().isCycled()) {
       return new Location(
-          (oldLocation.getX() + dX + game.map.getWidth()) % game.map.getWidth(),
-          (oldLocation.getY() + dY + game.map.getHeight()) % game.map.getHeight());
+          (oldLocation.getX() + dX + game.getMap().getWidth()) % game.getMap().getWidth(),
+          (oldLocation.getY() + dY + game.getMap().getHeight()) % game.getMap().getHeight());
     }
     return new Location(oldLocation.getX() + dX, oldLocation.getY() + dY);
   }
@@ -78,43 +79,43 @@ public class Snake implements Serializable {
   private void deleteTail(GameState game) {
     if (body.size() > getLength()) {
       Location leftover = body.removeLast();
-      game.map.setObject(new MapObject(leftover));
+      game.getMap().setObject(new MapObject(leftover));
     }
   }
 
   private boolean canEat(Location location, GameState game) {
-    return game.map.getObject(location).canEat();
+    return game.getMap().getObject(location).canEat();
   }
 
   private void eat(Location location, GameState game) {
-    Food food = game.map.getObject(location).getFood();
-    game.map.setObject(new MapObject(location));
+    Food food = game.getMap().getObject(location).getFood();
+    game.getMap().setObject(new MapObject(location));
     if (!food.isPoison()) {
-      game.map.setFoodCount(game.map.getFoodCount() - 1);
+      game.getMap().setFoodCount(game.getMap().getFoodCount() - 1);
       setLength(length + 1);
     } else {
-      game.map.setPoisonCount(game.map.getPoisonCount() - 1);
+      game.getMap().setPoisonCount(game.getMap().getPoisonCount() - 1);
       setLength(length - 1);
       deleteTail(game);
     }
     makeFood(game);
-    game.scores += food.getValue();
+    game.setScores(game.getScores() + food.getValue());
   }
 
   private void makeFood(GameState game) {
-    while (game.map.getFoodCount() == 0) {
+    while (game.getMap().getFoodCount() == 0) {
       int poison = rnd.nextInt();
 
-      if (game.noPoison || game.map.getPoisonCount() == 1) {
+      if (game.isNoPoison() || game.getMap().getPoisonCount() == 1) {
         poison = 1;
       }
-      game.map.generateFood(poison % 3 == 0);
+      game.getMap().generateFood(poison % 3 == 0);
     }
   }
 
   private boolean willLose(Location location, GameState game) {
     try {
-      MapObject itemInNextPos = game.map.getObject(location);
+      MapObject itemInNextPos = game.getMap().getObject(location);
       if (itemInNextPos.willKillTheSnake()) {
         return true;
       }

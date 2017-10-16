@@ -1,4 +1,11 @@
-import logic.*;
+import logic.Direction;
+import logic.Food;
+import logic.GameMap;
+import logic.GameState;
+import logic.Location;
+import logic.MapObject;
+import logic.Snake;
+import logic.Wall;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -19,15 +26,15 @@ public class OtherTests {
                 new GameMap(5, 5, false),
                 new Snake(2, 2),
                 new Food(10, false), new Location(2, 3));
-        Assert.assertEquals("head", game.map.getObject(2, 2).getDrawable());
-        Assert.assertEquals("food", game.map.getObject(2, 3).getDrawable());
-        Assert.assertEquals("nothing", game.map.getObject(4, 4).getDrawable());
-        game.map.setObject(new MapObject(new Wall(), 4, 4));
-        game.snake.move(Direction.Down, game);
-        Assert.assertEquals("head", game.map.getObject(2, 3).getDrawable());
-        Assert.assertEquals("snake", game.map.getObject(2, 2).getDrawable());
-        Assert.assertEquals("wall", game.map.getObject(4, 4).getDrawable());
-        game.map.setObject(new MapObject(new Food(10, true), 3, 3));
-        Assert.assertEquals("poison", game.map.getObject(3, 3).getDrawable());
+        Assert.assertEquals("head", game.getMap().getObject(2, 2).getDrawable());
+        Assert.assertEquals("food", game.getMap().getObject(2, 3).getDrawable());
+        Assert.assertEquals("nothing", game.getMap().getObject(4, 4).getDrawable());
+        game.getMap().setObject(new MapObject(new Wall(), 4, 4));
+        game.getSnake().move(Direction.Down, game);
+        Assert.assertEquals("head", game.getMap().getObject(2, 3).getDrawable());
+        Assert.assertEquals("snake", game.getMap().getObject(2, 2).getDrawable());
+        Assert.assertEquals("wall", game.getMap().getObject(4, 4).getDrawable());
+        game.getMap().setObject(new MapObject(new Food(10, true), 3, 3));
+        Assert.assertEquals("poison", game.getMap().getObject(3, 3).getDrawable());
     }
 }

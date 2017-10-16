@@ -1,12 +1,19 @@
 package gui;
 
-import logic.*;
-
-import javax.swing.*;
-import java.awt.*;
+import java.awt.Dimension;
+import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.Timer;
+import logic.Direction;
+import logic.GameMap;
+import logic.GameState;
+import logic.Level;
+import logic.Location;
+import logic.Snake;
 
 public class GameFieldPanel extends JPanel {
 
@@ -51,8 +58,8 @@ public class GameFieldPanel extends JPanel {
   @Override
   public void paintComponent(Graphics g) {
     super.paintComponent(g);
-    for (int i = 0; i < game.map.getWidth(); i++) {
-      for (int j = 0; j < game.map.getHeight(); j++) {
+    for (int i = 0; i < game.getMap().getWidth(); i++) {
+      for (int j = 0; j < game.getMap().getHeight(); j++) {
         Cell cell = paintedMap[i][j];
         cell.UpdateColour(new Location(i, j), game);
         g.setColor(cell.color);
@@ -62,23 +69,23 @@ public class GameFieldPanel extends JPanel {
   }
 
   private void initializeWindow(GameState game) {
-    paintedMap = new Cell[game.map.getWidth()][game.map.getHeight()];
-    initializePaintedMap(game.map);
+    paintedMap = new Cell[game.getMap().getWidth()][game.getMap().getHeight()];
+    initializePaintedMap(game.getMap());
 
-    setPreferredSize(new Dimension(game.map.getWidth() * (cellWidth + xGap),
-        game.map.getHeight() * (cellHeight + yGap)));
+    setPreferredSize(new Dimension(game.getMap().getWidth() * (cellWidth + xGap),
+        game.getMap().getHeight() * (cellHeight + yGap)));
     setFocusable(true);
     requestFocusInWindow();
   }
 
   private void endGame() {
-    parent.setTitle("Game over. \n You scored " + game.scores);
+    parent.setTitle("Game over. \n You scored " + game.getScores());
     gameIsPaused = true;
   }
 
   private void makeMove(ActionEvent evt) {
-    parent.setTitle("Snake. Score: " + game.scores);
-    if (game.isOver) {
+    parent.setTitle("Snake. Score: " + game.getScores());
+    if (game.isOver()) {
       endGame();
     }
     if (keyPressed == KeyEvent.VK_R) {
@@ -95,7 +102,7 @@ public class GameFieldPanel extends JPanel {
   }
 
   private void restartGame() {
-    game = new GameState(game.level);
+    game = new GameState(game.getLevel());
     initializeWindow(game);
     gameIsPaused = false;
     repaint();
@@ -117,7 +124,7 @@ public class GameFieldPanel extends JPanel {
 
   private void moveSnake() {
     int key = keyPressed;
-    Snake snake = game.snake;
+    Snake snake = game.getSnake();
 
     if (key == KeyEvent.VK_UP || key == KeyEvent.VK_W) {
       snake.move(Direction.Up, game);

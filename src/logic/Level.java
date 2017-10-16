@@ -7,13 +7,13 @@ public enum Level implements Serializable {
     @Override
     public GameMap drawMap(int width, int height, GameState game) {
       GameMap map = new GameMap(width, height, true);
-      game.map = map;
-      game.snake = new Snake(3, 3);
-      map.addSnake(game.snake);
+      game.setMap(map);
+      game.setSnake(new Snake(3, 3));
+      map.addSnake(game.getSnake());
       map.generateFood(false);
 
-      game.level = Level.zero;
-      game.noPoison = true;
+      game.setLevel(Level.zero);
+      game.setNoPoison(true);
 
       return map;
     }
@@ -25,11 +25,11 @@ public enum Level implements Serializable {
 
       map.setObject(new MapObject(new Wall(), 1, 1));
 
-      game.snake = new Snake(3, 3);
-      map.addSnake(game.snake);
+      game.setSnake(new Snake(3, 3));
+      map.addSnake(game.getSnake());
       map.generateFood(false);
 
-      game.level = Level.one;
+      game.setLevel(Level.one);
 
       return map;
     }
@@ -38,13 +38,13 @@ public enum Level implements Serializable {
     @Override
     public GameMap drawMap(int width, int height, GameState game) {
       GameMap map = new GameMap(width, height, false);
-      game.noPoison = false;
+      game.setNoPoison(false);
 
-      game.snake = new Snake(3, 3);
-      map.addSnake(game.snake);
+      game.setSnake(new Snake(3, 3));
+      map.addSnake(game.getSnake());
       map.generateFood(false);
 
-      game.level = Level.two;
+      game.setLevel(Level.two);
 
       return map;
     }

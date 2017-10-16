@@ -1,15 +1,19 @@
 package logic;
 
 import java.io.Serializable;
+import lombok.Getter;
+import lombok.Setter;
 
+@Getter
+@Setter
 public class GameState implements Serializable {
 
-  public GameMap map;
-  public Snake snake;
-  public boolean isOver = false;
-  public boolean noPoison = true;
-  public int scores;
-  public Level level;
+  private GameMap map;
+  private Snake snake;
+  private boolean isOver = false;
+  private boolean noPoison = true;
+  private int scores;
+  private Level level;
 
   public GameState(int width, int height, Snake snake) {
     map = new GameMap(width, height);
