@@ -49,15 +49,6 @@ public enum Level implements Serializable {
       return map;
     }
   };
-//  zero,
-//  one
-
-//  private Drawer drawer;
-//  Level(Drawer drawer) {
-//    this.drawer = drawer;
-//  }
-//
-//  private static class Drawer{}
 
   public abstract GameMap drawMap(int width, int height, GameState game);
 }
