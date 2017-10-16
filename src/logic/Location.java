@@ -1,11 +1,14 @@
 package logic;
 
 import java.io.Serializable;
+import lombok.Getter;
 
 public class Location implements Serializable {
 
-  int x;
-  int y;
+  @Getter
+  private int x;
+  @Getter
+  private int y;
 
   public Location(int x, int y) {
     this.x = x;

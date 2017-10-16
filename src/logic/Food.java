@@ -1,19 +1,14 @@
 package logic;
 
 import java.io.Serializable;
+import lombok.Getter;
 
 public class Food implements Serializable {
 
+  @Getter
   private int value;
+  @Getter
   private boolean poison = false;
-
-  public boolean isPoison() {
-    return poison;
-  }
-
-  public int getValue() {
-    return value;
-  }
 
   public Food(int val, boolean poison) {
     if (poison) {

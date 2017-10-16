@@ -2,12 +2,30 @@ package logic;
 
 import java.io.Serializable;
 import java.util.Random;
+import lombok.Getter;
 
 public class GameMap implements Serializable {
 
+  @Getter
   private boolean isCycled = true;
+  @Getter
   private int foodCount;
+  @Getter
   private int poisonCount;
+
+  public void setFoodCount(int foodCount) {
+    if (foodCount < 0) {
+      return;
+    }
+    this.foodCount = foodCount;
+  }
+
+  public void setPoisonCount(int poisonCount) {
+    if (poisonCount < 0) {
+      return;
+    }
+    this.poisonCount = poisonCount;
+  }
 
   private MapObject[][] map;
   private Random rnd = new Random();
@@ -40,8 +58,8 @@ public class GameMap implements Serializable {
   }
 
   public void setObject(MapObject object) {
-    int x = object.getLocation().x;
-    int y = object.getLocation().y;
+    int x = object.getLocation().getX();
+    int y = object.getLocation().getY();
     if (x >= getWidth() || y >= getHeight() || x < 0 || y < 0)
       throw new IndexOutOfBoundsException();
     map[x][y] = object;
@@ -54,7 +72,7 @@ public class GameMap implements Serializable {
   }
 
   public MapObject getObject(Location location) {
-    return getObject(location.x, location.y);
+    return getObject(location.getX(), location.getY());
   }
 
   public Location generateFood(boolean poison) {
@@ -77,7 +95,7 @@ public class GameMap implements Serializable {
     MapObject obj = this.getObject(location);
     if (!obj.isFree())
         return;
-    this.setObject(new MapObject(snake, location.x, location.y));
+    this.setObject(new MapObject(snake, location.getX(), location.getY()));
   }
 
   public void addFood(Food food, int x, int y) {
@@ -94,43 +112,5 @@ public class GameMap implements Serializable {
     }
   }
 
-    public boolean isCycled() {
-        return this.isCycled;
-    }
 
-    public int getFoodCount() {
-        return this.foodCount;
-    }
-
-    public int getPoisonCount() {
-        return this.poisonCount;
-    }
-
-    //    public MapObject[][] getMap() {
-//        return this.map;
-//    }
-
-//    public Random getRnd() {
-//        return this.rnd;
-//    }
-//
-//    public void setCycled(boolean isCycled) {
-//        this.isCycled = isCycled;
-//    }
-
-    public void setFoodCount(int foodCount) {
-        this.foodCount = foodCount;
-    }
-
-    public void setPoisonCount(int poisonCount) {
-        this.poisonCount = poisonCount;
-    }
-
-//    public void setMap(MapObject[][] map) {
-//        this.map = map;
-//    }
-//
-//    public void setRnd(Random rnd) {
-//        this.rnd = rnd;
-//    }
 }

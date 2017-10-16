@@ -4,16 +4,16 @@ import java.io.Serializable;
 import java.util.ArrayDeque;
 import java.util.Deque;
 import java.util.Random;
+import lombok.Getter;
 
 public class Snake implements Serializable {
 
   private Deque<Location> body = new ArrayDeque<>();
+  @Getter
   private Direction direction = Direction.Stop;
 
-  public Direction getDirection() {
-    return direction;
-  }
   private Random rnd = new Random();
+  @Getter
   private int length = 1;
 
   public Snake(int x, int y) {
@@ -22,10 +22,6 @@ public class Snake implements Serializable {
 
   public Location getHead() {
     return body.getFirst();
-  }
-
-  public int getLength() {
-    return length;
   }
 
   private void setLength(int value) {
@@ -43,7 +39,8 @@ public class Snake implements Serializable {
     if (canEat(newHead, game)) {
       eat(newHead, game);
     }
-    game.map.setObject(new MapObject(this, newHead.x, newHead.y)); //добавили голову на карту
+    game.map
+        .setObject(new MapObject(this, newHead.getX(), newHead.getY())); //добавили голову на карту
     deleteTail(game);
   }
 
@@ -72,10 +69,10 @@ public class Snake implements Serializable {
     }
     if (game.map.isCycled()) {
       return new Location(
-          (oldLocation.x + dX + game.map.getWidth()) % game.map.getWidth(),
-          (oldLocation.y + dY + game.map.getHeight()) % game.map.getHeight());
+          (oldLocation.getX() + dX + game.map.getWidth()) % game.map.getWidth(),
+          (oldLocation.getY() + dY + game.map.getHeight()) % game.map.getHeight());
     }
-    return new Location(oldLocation.x + dX, oldLocation.y + dY);
+    return new Location(oldLocation.getX() + dX, oldLocation.getY() + dY);
   }
 
   private void deleteTail(GameState game) {
