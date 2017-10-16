@@ -57,7 +57,7 @@ public class GameMap implements Serializable {
     return getObject(location.x, location.y);
   }
 
-  Location generateFood(boolean poison) {
+  public Location generateFood(boolean poison) {
     while (true) {
       int x = rnd.nextInt(getWidth() - 1);
       int y = rnd.nextInt(getHeight() - 1);
