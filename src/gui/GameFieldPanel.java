@@ -62,8 +62,8 @@ public class GameFieldPanel extends JPanel {
       for (int j = 0; j < game.getMap().getHeight(); j++) {
         Cell cell = paintedMap[i][j];
         cell.UpdateColour(new Location(i, j), game);
-        g.setColor(cell.color);
-        g.fillRect(cell.x, cell.y, cell.width, cell.height);
+        g.setColor(cell.getColor());
+        g.fillRect(cell.getX(), cell.getY(), cell.getWidth(), cell.getHeight());
       }
     }
   }
@@ -108,14 +108,14 @@ public class GameFieldPanel extends JPanel {
     repaint();
   }
 
-  void startNewGame(Level level) {
+  public void startNewGame(Level level) {
     game = new GameState(level);
     initializeWindow(game);
     gameIsPaused = false;
     repaint();
   }
 
-  void startNewGame(GameState game) {
+  public void startNewGame(GameState game) {
     this.game = game;
     initializeWindow(this.game);
     gameIsPaused = false;

@@ -7,14 +7,16 @@ import java.util.Map;
 import logic.GameState;
 import logic.Location;
 import logic.MapObject;
+import lombok.Getter;
 
+@Getter
 class Cell implements Serializable {
 
-  int x;
-  int y;
-  int width;
-  int height;
-  Color color;
+  private int x;
+  private int y;
+  private int width;
+  private int height;
+  private Color color;
 
   private static Map<String, Color> colors = new HashMap<String, Color>();
 
@@ -27,14 +29,14 @@ class Cell implements Serializable {
     colors.put("nothing", Color.LIGHT_GRAY);
   }
 
-  Cell(int x, int y, int width, int height) {
+  public Cell(int x, int y, int width, int height) {
     this.x = x;
     this.y = y;
     this.width = width;
     this.height = height;
   }
 
-  void UpdateColour(Location location, GameState game) {
+  public void UpdateColour(Location location, GameState game) {
     MapObject smth = game.getMap().getObject(location);
     color = colors.get(smth.getDrawable());
   }
