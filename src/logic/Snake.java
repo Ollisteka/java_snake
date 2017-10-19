@@ -5,11 +5,13 @@ import java.util.ArrayDeque;
 import java.util.Deque;
 import java.util.Random;
 import lombok.Getter;
+import lombok.Setter;
 
 public class Snake implements Serializable {
 
   private Deque<Location> body = new ArrayDeque<>();
   @Getter
+  @Setter
   private Direction direction = Direction.Stop;
 
   private Random rnd = new Random();

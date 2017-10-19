@@ -1,6 +1,8 @@
 package logic;
 
+import java.awt.event.ActionEvent;
 import java.io.Serializable;
+import javax.swing.Timer;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -14,6 +16,18 @@ public class GameState implements Serializable {
   private boolean noPoison = true;
   private int scores;
   private Level level;
+
+  @Getter
+  private final int delay = 100;
+  private final int magic = 3;
+  private Timer timer;
+  private int timerTick;
+  @Getter
+  @Setter
+  private boolean isPaused = false;
+  @Getter
+  @Setter
+  private boolean readyToRestart = false;
 
   public GameState(int width, int height, Snake snake) {
     map = new GameMap(width, height);
@@ -54,5 +68,22 @@ public class GameState implements Serializable {
         break;
     }
     isOver = false;
+  }
+
+  public void startTimer() {
+    timer = new Timer(delay, this::makeMove);
+    timer.start();
+  }
+
+  private void makeMove(ActionEvent event) {
+    if (this.isPaused || this.isOver) {
+      return;
+    }
+    if (snake.getDirection() != Direction.Stop && timerTick != 0 && timerTick % magic == 0) {
+      snake.move(snake.getDirection(), this);
+      timerTick = 0;
+    } else {
+      timerTick++;
+    }
   }
 }

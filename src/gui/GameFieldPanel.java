@@ -3,17 +3,13 @@ package gui;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.event.ActionEvent;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.Timer;
-import logic.Direction;
 import logic.GameMap;
 import logic.GameState;
 import logic.Level;
 import logic.Location;
-import logic.Snake;
 
 public class GameFieldPanel extends JPanel {
 
@@ -28,31 +24,19 @@ public class GameFieldPanel extends JPanel {
 
   private JFrame parent;
 
-  private int keyPressed;
-
-  private int magic = 3;
-
   private Timer timer;
-  private int timerTick;
 
-  private boolean gameIsPaused = false;
+  private Controller controller;
 
   GameFieldPanel(GameState game, JFrame parent) {
     this.game = game;
     this.parent = parent;
-
     initializeWindow(this.game);
-
-    addKeyListener(new KeyAdapter() {
-      @Override
-      public void keyPressed(KeyEvent e) {
-        keyPressed = e.getKeyCode();
-      }
-    });
-    timer = new Timer(100, this::makeMove);
+    controller = new Controller(this.game);
+    addKeyListener(controller);
+    timer = new Timer(0, this::nextStep);
     timer.start();
-
-
+    this.game.startTimer();
   }
 
   @Override
@@ -68,7 +52,7 @@ public class GameFieldPanel extends JPanel {
     }
   }
 
-  private void initializeWindow(GameState game) {
+  public void initializeWindow(GameState game) {
     paintedMap = new Cell[game.getMap().getWidth()][game.getMap().getHeight()];
     initializePaintedMap(game.getMap());
 
@@ -80,73 +64,46 @@ public class GameFieldPanel extends JPanel {
 
   private void endGame() {
     parent.setTitle("Game over. \n You scored " + game.getScores());
-    gameIsPaused = true;
+    game.setPaused(true);
   }
 
-  private void makeMove(ActionEvent evt) {
+  private void nextStep(ActionEvent evt) {
     parent.setTitle("Snake. Score: " + game.getScores());
-    if (game.isOver()) {
+    if (game.isOver())
       endGame();
-    }
-    if (keyPressed == KeyEvent.VK_R) {
+    else if (game.isReadyToRestart())
       restartGame();
-    } else if (keyPressed == KeyEvent.VK_P) {
-      gameIsPaused = !gameIsPaused;
-      keyPressed = KeyEvent.KEY_LOCATION_UNKNOWN;
-      return;
-    } else if (gameIsPaused) {
-      return;
-    }
-    moveSnake();
     repaint();
   }
 
   private void restartGame() {
     game = new GameState(game.getLevel());
     initializeWindow(game);
-    gameIsPaused = false;
+    ChangeController();
+    game.startTimer();
     repaint();
   }
 
   public void startNewGame(Level level) {
     game = new GameState(level);
     initializeWindow(game);
-    gameIsPaused = false;
+    ChangeController();
+    game.startTimer();
     repaint();
   }
 
   public void startNewGame(GameState game) {
     this.game = game;
     initializeWindow(this.game);
-    gameIsPaused = false;
+    ChangeController();
+    game.startTimer();
     repaint();
   }
 
-  private void moveSnake() {
-    int key = keyPressed;
-    Snake snake = game.getSnake();
-
-    if (key == KeyEvent.VK_UP || key == KeyEvent.VK_W) {
-      snake.move(Direction.Up, game);
-      timerTick = 0;
-    } else if (key == KeyEvent.VK_DOWN || key == KeyEvent.VK_S) {
-      snake.move(Direction.Down, game);
-      timerTick = 0;
-    } else if (key == KeyEvent.VK_RIGHT || key == KeyEvent.VK_D) {
-      snake.move(Direction.Right, game);
-      timerTick = 0;
-    } else if (key == KeyEvent.VK_LEFT || key == KeyEvent.VK_A) {
-      snake.move(Direction.Left, game);
-      timerTick = 0;
-    } else if (snake.getDirection() != Direction.Stop
-        && key == KeyEvent.KEY_LOCATION_UNKNOWN && timerTick != 0
-        && timerTick % magic == 0) {
-      snake.move(snake.getDirection(), game);
-      timerTick = 0;
-    } else {
-      timerTick++;
-    }
-    keyPressed = KeyEvent.KEY_LOCATION_UNKNOWN;
+  private void ChangeController() {
+    removeKeyListener(controller);
+    controller = new Controller(this.game);
+    addKeyListener(controller);
   }
 
   private void initializePaintedMap(GameMap gameMap) {
