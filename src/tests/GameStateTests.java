@@ -5,6 +5,8 @@ import logic.GameState;
 import logic.Level;
 import logic.Location;
 import logic.Snake;
+import gui.GameFieldPanel;
+import gui.GameForm;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -132,5 +134,20 @@ public class GameStateTests {
 
         Game.getSnake().move(Direction.Down, Game);
         Assert.assertEquals(false, Game.isOver());
+    }
+
+    @Test
+    public void MoveWithTimerTests(){
+        GameState Game = new GameState(
+                new GameMap(5, 5, true),
+                new Snake(2, 2),
+                new Food(10, true),
+                new Location(2, 3));
+        Game.startTimer();
+        Assert.assertEquals(0, Game.getTimerTick());
+        Game.getSnake().setDirection(Direction.Down);
+        Game.setTimerTick(1);
+        Assert.assertEquals(1, Game.getTimerTick());
+        Assert.assertEquals(new Location(2,2), Game.getSnake().getHead());
     }
 }
