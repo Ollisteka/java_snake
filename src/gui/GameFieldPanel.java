@@ -25,13 +25,15 @@ public class GameFieldPanel extends JPanel {
 
   private Controller controller;
 
+  private String lastTitle = "";
+
   GameFieldPanel(GameState game, JFrame parent) {
     this.game = game;
     this.parent = parent;
     initializeWindow(this.game);
     controller = new Controller(this.game);
     addKeyListener(controller);
-    timer = new Timer(0, this::nextStep);
+    timer = new Timer(10, this::nextStep);
     timer.start();
     this.game.startTimer();
   }
@@ -60,16 +62,24 @@ public class GameFieldPanel extends JPanel {
   }
 
   private void endGame() {
-    parent.setTitle("game over. \n You scored " + game.getScores());
+    String newTitle = "Game over. \n You scored " + game.getScores();
+    if (newTitle != this.lastTitle) {
+      parent.setTitle(newTitle);
+    }
     game.setPaused(true);
   }
 
   private void nextStep(ActionEvent evt) {
-    parent.setTitle("Snake. Score: " + game.getScores());
     if (game.isOver()) {
       endGame();
+      return;
     } else if (game.isReadyToRestart()) {
       restartGame();
+      return;
+    }
+    String newTitle = "Snake. Score: " + game.getScores();
+    if (newTitle != this.lastTitle) {
+      parent.setTitle(newTitle);
     }
     repaint();
   }
