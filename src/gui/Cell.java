@@ -23,7 +23,7 @@ class Cell implements Serializable {
   static {
     colors.put("snake", Color.PINK);
     colors.put("head", Color.MAGENTA);
-    colors.put("food", Color.GREEN);
+    colors.put("Food", Color.GREEN);
     colors.put("poison", Color.RED);
     colors.put("wall", Color.BLACK);
     colors.put("nothing", Color.LIGHT_GRAY);

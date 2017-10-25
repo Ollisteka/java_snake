@@ -63,7 +63,7 @@ public class GameFieldPanel extends JPanel {
   }
 
   private void endGame() {
-    parent.setTitle("Game over. \n You scored " + game.getScores());
+    parent.setTitle("game over. \n You scored " + game.getScores());
     game.setPaused(true);
   }
 
@@ -79,7 +79,7 @@ public class GameFieldPanel extends JPanel {
   private void restartGame() {
     game = new GameState(game.getLevel());
     initializeWindow(game);
-    ChangeController();
+    changeController();
     game.startTimer();
     repaint();
   }
@@ -87,7 +87,7 @@ public class GameFieldPanel extends JPanel {
   public void startNewGame(Level level) {
     game = new GameState(level);
     initializeWindow(game);
-    ChangeController();
+    changeController();
     game.startTimer();
     repaint();
   }
@@ -95,12 +95,12 @@ public class GameFieldPanel extends JPanel {
   public void startNewGame(GameState game) {
     this.game = game;
     initializeWindow(this.game);
-    ChangeController();
+    changeController();
     game.startTimer();
     repaint();
   }
 
-  private void ChangeController() {
+  private void changeController() {
     removeKeyListener(controller);
     controller = new Controller(this.game);
     addKeyListener(controller);

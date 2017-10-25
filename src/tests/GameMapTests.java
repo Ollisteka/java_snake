@@ -85,7 +85,7 @@ public class GameMapTests {
   }
 
   @Test
-  public void GameMapSome() {
+  public void gameMapSome() {
     GameMap gm = new GameMap(5, 5);
     gm.setObject(new MapObject(new Wall(), 1, 1));
     gm.addSnake(new Snake(1, 1));

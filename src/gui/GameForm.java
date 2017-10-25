@@ -33,7 +33,7 @@ public class GameForm implements Runnable {
     addLevelMenu(chooseLevelMenu, Level.one);
     addLevelMenu(chooseLevelMenu, Level.two);
 
-    JMenu gameMenu = new JMenu("Game");
+    JMenu gameMenu = new JMenu("game");
     menuBar.add(gameMenu);
 
     JMenuItem save = new JMenuItem("Save");

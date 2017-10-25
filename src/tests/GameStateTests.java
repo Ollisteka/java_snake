@@ -1,25 +1,18 @@
-import logic.Direction;
+import logic.*;
 import logic.Food;
-import logic.GameMap;
-import logic.GameState;
-import logic.Level;
-import logic.Location;
-import logic.Snake;
-import gui.GameFieldPanel;
-import gui.GameForm;
 import org.junit.Assert;
 import org.junit.Test;
 
 public class GameStateTests {
-    public GameState Game = new GameState(
+    public GameState game = new GameState(
             new GameMap(5, 5, false),
             new Snake(2, 2),
         new Food(10, false), new Location(2, 3));
 
     @Test
     public void gameStateConstructorTest() {
-        Assert.assertEquals(false, Game.isOver());
-        Assert.assertEquals(0, Game.getScores());
+        Assert.assertEquals(false, game.isOver());
+        Assert.assertEquals(0, game.getScores());
     }
 
     @Test
@@ -58,10 +51,10 @@ public class GameStateTests {
 
     @Test
     public void snakeFromConstructorTest() {
-        //Assert.assertEquals(1, Game.getSnake().body.size());
-        Assert.assertEquals(new Location(2, 2), Game.getSnake().getHead());
-        Assert.assertEquals(1, Game.getSnake().getLength());
-        Assert.assertEquals(false, Game.getMap().isCycled());
+        //Assert.assertEquals(1, game.getSnake().body.size());
+        Assert.assertEquals(new Location(2, 2), game.getSnake().getHead());
+        Assert.assertEquals(1, game.getSnake().getLength());
+        Assert.assertEquals(false, game.getMap().isCycled());
         GameState Game2 = new GameState(5,5,
                 new Snake(2, 2),
                 true);
@@ -74,46 +67,46 @@ public class GameStateTests {
 
     @Test
     public void movementTests() {
-        Game.getSnake().move(Direction.Left, Game);
-        Assert.assertEquals(new Location(1, 2), Game.getSnake().getHead());
-        Assert.assertEquals(Direction.Left, Game.getSnake().getDirection());
+        game.getSnake().move(Direction.Left, game);
+        Assert.assertEquals(new Location(1, 2), game.getSnake().getHead());
+        Assert.assertEquals(Direction.Left, game.getSnake().getDirection());
 
-        Game.getSnake().move(Direction.Up, Game);
-        Assert.assertEquals(new Location(1, 1), Game.getSnake().getHead());
-        Assert.assertEquals(Direction.Up, Game.getSnake().getDirection());
+        game.getSnake().move(Direction.Up, game);
+        Assert.assertEquals(new Location(1, 1), game.getSnake().getHead());
+        Assert.assertEquals(Direction.Up, game.getSnake().getDirection());
 
-        Game.getSnake().move(Direction.Right, Game);
-        Assert.assertEquals(new Location(2, 1), Game.getSnake().getHead());
-        Assert.assertEquals(Direction.Right, Game.getSnake().getDirection());
+        game.getSnake().move(Direction.Right, game);
+        Assert.assertEquals(new Location(2, 1), game.getSnake().getHead());
+        Assert.assertEquals(Direction.Right, game.getSnake().getDirection());
 
-        Game.getSnake().move(Direction.Down, Game);
-        Assert.assertEquals(new Location(2, 2), Game.getSnake().getHead());
-        Assert.assertEquals(Direction.Down, Game.getSnake().getDirection());
+        game.getSnake().move(Direction.Down, game);
+        Assert.assertEquals(new Location(2, 2), game.getSnake().getHead());
+        Assert.assertEquals(Direction.Down, game.getSnake().getDirection());
     }
 
     @Test
     public void eatTests() {
-        Game.getSnake().move(Direction.Down, Game);
-        Assert.assertEquals(new Location(2, 3), Game.getSnake().getHead());
-        Assert.assertEquals(2, Game.getSnake().getLength());
-        Assert.assertEquals(10, Game.getScores());
-        Assert.assertEquals(1, Game.getMap().getFoodCount());
-        Assert.assertEquals(false, Game.isOver());
+        game.getSnake().move(Direction.Down, game);
+        Assert.assertEquals(new Location(2, 3), game.getSnake().getHead());
+        Assert.assertEquals(2, game.getSnake().getLength());
+        Assert.assertEquals(10, game.getScores());
+        Assert.assertEquals(1, game.getMap().getFoodCount());
+        Assert.assertEquals(false, game.isOver());
 
     }
 
     @Test
     public void nonCycledMapTests() {
-        Game.getSnake().move(Direction.Down, Game);
-        Assert.assertEquals(new Location(2, 3), Game.getSnake().getHead());
-        Assert.assertEquals(false, Game.isOver());
+        game.getSnake().move(Direction.Down, game);
+        Assert.assertEquals(new Location(2, 3), game.getSnake().getHead());
+        Assert.assertEquals(false, game.isOver());
 
-        Game.getSnake().move(Direction.Down, Game);
-        Assert.assertEquals(new Location(2, 4), Game.getSnake().getHead());
-        Assert.assertEquals(false, Game.isOver());
+        game.getSnake().move(Direction.Down, game);
+        Assert.assertEquals(new Location(2, 4), game.getSnake().getHead());
+        Assert.assertEquals(false, game.isOver());
 
-        Game.getSnake().move(Direction.Down, Game);
-        Assert.assertEquals(true, Game.isOver());
+        game.getSnake().move(Direction.Down, game);
+        Assert.assertEquals(true, game.isOver());
     }
 
     @Test
