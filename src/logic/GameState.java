@@ -6,15 +6,20 @@ import javax.swing.Timer;
 import lombok.Getter;
 import lombok.Setter;
 
-@Getter
-@Setter
+
 public class GameState implements Serializable {
 
+  @Getter @Setter
   private GameMap map;
+  @Getter @Setter
   private Snake snake;
+  @Getter @Setter
   private boolean isOver = false;
+  @Getter @Setter
   private boolean noPoison = true;
+  @Getter @Setter
   private int scores;
+  @Getter @Setter
   private Level level;
 
   @Getter
@@ -22,11 +27,9 @@ public class GameState implements Serializable {
   private final int magic = 3;
   private Timer timer;
   private int timerTick;
-  @Getter
-  @Setter
+  @Getter @Setter
   private boolean isPaused = false;
-  @Getter
-  @Setter
+  @Getter @Setter
   private boolean readyToRestart = false;
 
   public GameState(int width, int height, Snake snake) {

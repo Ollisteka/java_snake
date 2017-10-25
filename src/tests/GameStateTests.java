@@ -1,5 +1,10 @@
-import logic.*;
+import logic.Direction;
 import logic.Food;
+import logic.GameMap;
+import logic.GameState;
+import logic.Level;
+import logic.Location;
+import logic.Snake;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -136,9 +141,15 @@ public class GameStateTests {
                 new Snake(2, 2),
                 new Food(10, true),
                 new Location(2, 3));
+        game.startTimer();
         game.getSnake().setDirection(Direction.Down);
         for (int i = 0;i<4;i++)
             game.makeMove(null);
         Assert.assertEquals(new Location(2,3), game.getSnake().getHead());
+        game.setPaused(true);
+      for (int i = 0;i<4;i++)
+        game.makeMove(null);
+      Assert.assertEquals(new Location(2,3), game.getSnake().getHead());
+
     }
 }
