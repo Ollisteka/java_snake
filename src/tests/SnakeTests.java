@@ -1,5 +1,10 @@
-import logic.*;
+import logic.Direction;
 import logic.Food;
+import logic.GameState;
+import logic.Location;
+import logic.MapObject;
+import logic.Snake;
+import logic.Wall;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -28,7 +33,7 @@ public class SnakeTests {
   }
 
   @Test
-  public void testEatFood(){
+  public void testEatFood() {
     GameState game = new GameState(10, 10, new Snake(0, 0));
     game.getMap().setObject(new MapObject(new Food(10, false), 1, 0));
     game.getSnake().move(Direction.Right, game);
@@ -37,7 +42,7 @@ public class SnakeTests {
   }
 
   @Test
-  public void testKill(){
+  public void testKill() {
     GameState game = new GameState(10, 10, new Snake(0, 0));
     game.getMap().setObject(new MapObject(new Wall(), 1, 0));
     game.getSnake().move(Direction.Right, game);

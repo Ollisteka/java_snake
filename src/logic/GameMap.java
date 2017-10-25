@@ -12,6 +12,18 @@ public class GameMap implements Serializable {
   private int foodCount;
   @Getter
   private int poisonCount;
+  private MapObject[][] map;
+  private Random rnd = new Random();
+
+  public GameMap(int width, int height) {
+    map = new MapObject[width][height];
+    initializeDefaultMap();
+  }
+  public GameMap(int width, int height, boolean cycled) {
+    map = new MapObject[width][height];
+    isCycled = cycled;
+    initializeDefaultMap();
+  }
 
   public void setFoodCount(int foodCount) {
     if (foodCount < 0) {
@@ -25,20 +37,6 @@ public class GameMap implements Serializable {
       return;
     }
     this.poisonCount = poisonCount;
-  }
-
-  private MapObject[][] map;
-  private Random rnd = new Random();
-
-  public GameMap(int width, int height) {
-    map = new MapObject[width][height];
-    initializeDefaultMap();
-  }
-
-  public GameMap(int width, int height, boolean cycled) {
-    map = new MapObject[width][height];
-    isCycled = cycled;
-    initializeDefaultMap();
   }
 
   private void initializeDefaultMap() {
@@ -60,14 +58,16 @@ public class GameMap implements Serializable {
   public void setObject(MapObject object) {
     int x = object.getLocation().getX();
     int y = object.getLocation().getY();
-    if (x >= getWidth() || y >= getHeight() || x < 0 || y < 0)
+    if (x >= getWidth() || y >= getHeight() || x < 0 || y < 0) {
       throw new IndexOutOfBoundsException();
+    }
     map[x][y] = object;
   }
 
   public MapObject getObject(int x, int y) {
-    if (x >= getWidth() || y >= getHeight() || x < 0 || y < 0)
+    if (x >= getWidth() || y >= getHeight() || x < 0 || y < 0) {
       throw new IndexOutOfBoundsException();
+    }
     return map[x][y];
   }
 
@@ -81,10 +81,11 @@ public class GameMap implements Serializable {
       int y = rnd.nextInt(getHeight() - 1);
       if (this.getObject(x, y).isFree()) {
         this.setObject(new MapObject(new Food(10, poison), x, y));
-        if (!poison)
+        if (!poison) {
           foodCount++;
-        else
+        } else {
           poisonCount++;
+        }
         return new Location(x, y);
       }
     }
@@ -93,8 +94,9 @@ public class GameMap implements Serializable {
   public void addSnake(Snake snake) {
     Location location = snake.getHead();
     MapObject obj = this.getObject(location);
-    if (!obj.isFree())
-        return;
+    if (!obj.isFree()) {
+      return;
+    }
     this.setObject(new MapObject(snake, location.getX(), location.getY()));
   }
 

@@ -9,27 +9,34 @@ import lombok.Setter;
 
 public class GameState implements Serializable {
 
-  @Getter @Setter
-  private GameMap map;
-  @Getter @Setter
-  private Snake snake;
-  @Getter @Setter
-  private boolean isOver = false;
-  @Getter @Setter
-  private boolean noPoison = true;
-  @Getter @Setter
-  private int scores;
-  @Getter @Setter
-  private Level level;
-
   @Getter
   private final int delay = 100;
   private final int magic = 3;
+  @Getter
+  @Setter
+  private GameMap map;
+  @Getter
+  @Setter
+  private Snake snake;
+  @Getter
+  @Setter
+  private boolean isOver = false;
+  @Getter
+  @Setter
+  private boolean noPoison = true;
+  @Getter
+  @Setter
+  private int scores;
+  @Getter
+  @Setter
+  private Level level;
   private Timer timer;
   private int timerTick;
-  @Getter @Setter
+  @Getter
+  @Setter
   private boolean isPaused = false;
-  @Getter @Setter
+  @Getter
+  @Setter
   private boolean readyToRestart = false;
 
   public GameState(int width, int height, Snake snake) {

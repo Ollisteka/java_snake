@@ -13,15 +13,12 @@ import logic.Location;
 
 public class GameFieldPanel extends JPanel {
 
+  public GameState game;
   private int cellWidth = 30;
   private int cellHeight = 30;
-
   private int xGap = 2;
   private int yGap = 2;
-
   private Cell[][] paintedMap;
-  public GameState game;
-
   private JFrame parent;
 
   private Timer timer;
@@ -69,10 +66,11 @@ public class GameFieldPanel extends JPanel {
 
   private void nextStep(ActionEvent evt) {
     parent.setTitle("Snake. Score: " + game.getScores());
-    if (game.isOver())
+    if (game.isOver()) {
       endGame();
-    else if (game.isReadyToRestart())
+    } else if (game.isReadyToRestart()) {
       restartGame();
+    }
     repaint();
   }
 
@@ -112,7 +110,7 @@ public class GameFieldPanel extends JPanel {
     for (int i = 0; i < gameMap.getWidth(); i++) {
       for (int j = 0; j < gameMap.getHeight(); j++) {
         Cell cellToAdd = new Cell(x, y, cellWidth, cellHeight);
-        cellToAdd.UpdateColour(new Location(i,j), game);
+        cellToAdd.UpdateColour(new Location(i, j), game);
         paintedMap[j][i] = cellToAdd;
         x += cellWidth + xGap;
       }
