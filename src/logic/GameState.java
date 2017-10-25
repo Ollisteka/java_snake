@@ -75,7 +75,7 @@ public class GameState implements Serializable {
     timer.start();
   }
 
-  private void makeMove(ActionEvent event) {
+  public void makeMove(ActionEvent event) {
     if (this.isPaused || this.isOver) {
       return;
     }
