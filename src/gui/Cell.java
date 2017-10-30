@@ -14,7 +14,7 @@ class Cell implements Serializable {
 
   private static Map<String, Color> colors = new HashMap<String, Color>();
 
-  static {
+  static{
     colors.put("snake", Color.PINK);
     colors.put("head", Color.MAGENTA);
     colors.put("Food", Color.GREEN);

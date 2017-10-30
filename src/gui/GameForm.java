@@ -50,7 +50,7 @@ public class GameForm implements Runnable {
     save.addActionListener(arg0 -> {
       try {
         ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(saveName));
-        out.writeObject(gameFieldPanel.game); //Write byte stream to file system.
+        out.writeObject(gameFieldPanel.getGame()); //Write byte stream to file system.
         out.close();
       } catch (IOException ex) {
         ex.printStackTrace();

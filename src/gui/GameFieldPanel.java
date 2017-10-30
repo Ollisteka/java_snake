@@ -10,10 +10,12 @@ import logic.GameMap;
 import logic.GameState;
 import logic.Level;
 import logic.Location;
+import lombok.Getter;
 
 public class GameFieldPanel extends JPanel {
 
-  public GameState game;
+  @Getter
+  private GameState game;
   private int cellWidth = 30;
   private int cellHeight = 30;
   private int xGap = 2;
@@ -27,7 +29,7 @@ public class GameFieldPanel extends JPanel {
 
   private String lastTitle = "";
 
-  GameFieldPanel(GameState game, JFrame parent) {
+  public GameFieldPanel(GameState game, JFrame parent) {
     this.game = game;
     this.parent = parent;
     initializeWindow(this.game);
