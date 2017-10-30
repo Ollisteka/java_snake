@@ -41,6 +41,10 @@ public class GameStateTests {
   @Test
   public void testGameStateWithLevelZero() {
     GameState myState = new GameState(Level.zero);
+    Assert.assertEquals(Level.zero, myState.getLevel());
+    Assert.assertEquals(0, myState.getMap().getPoisonCount());
+    myState.getMap().setPoisonCount(-1);
+    Assert.assertEquals(0, myState.getMap().getPoisonCount());
     // Assert.assertNotNull(myState.getMap().getObject(3,3).getSnake());
     Assert.assertEquals(10, myState.getMap().getHeight());
     Assert.assertEquals(10, myState.getMap().getWidth());
