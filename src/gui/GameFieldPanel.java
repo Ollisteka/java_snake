@@ -13,20 +13,19 @@ import logic.Location;
 
 public class GameFieldPanel extends JPanel {
 
+  public GameState game;
   private int cellWidth = 30;
   private int cellHeight = 30;
-
   private int xGap = 2;
   private int yGap = 2;
-
   private Cell[][] paintedMap;
-  public GameState game;
-
   private JFrame parent;
 
   private Timer timer;
 
   private Controller controller;
+
+  private String lastTitle = "";
 
   GameFieldPanel(GameState game, JFrame parent) {
     this.game = game;
@@ -34,7 +33,7 @@ public class GameFieldPanel extends JPanel {
     initializeWindow(this.game);
     controller = new Controller(this.game);
     addKeyListener(controller);
-    timer = new Timer(0, this::nextStep);
+    timer = new Timer(10, this::nextStep);
     timer.start();
     this.game.startTimer();
   }
@@ -63,16 +62,25 @@ public class GameFieldPanel extends JPanel {
   }
 
   private void endGame() {
-    parent.setTitle("game over. \n You scored " + game.getScores());
+    String newTitle = "Game over. \n You scored " + game.getScores();
+    if (newTitle != this.lastTitle) {
+      parent.setTitle(newTitle);
+    }
     game.setPaused(true);
   }
 
   private void nextStep(ActionEvent evt) {
-    parent.setTitle("Snake. Score: " + game.getScores());
-    if (game.isOver())
+    if (game.isOver()) {
       endGame();
-    else if (game.isReadyToRestart())
+      return;
+    } else if (game.isReadyToRestart()) {
       restartGame();
+      return;
+    }
+    String newTitle = "Snake. Score: " + game.getScores();
+    if (newTitle != this.lastTitle) {
+      parent.setTitle(newTitle);
+    }
     repaint();
   }
 
@@ -112,7 +120,7 @@ public class GameFieldPanel extends JPanel {
     for (int i = 0; i < gameMap.getWidth(); i++) {
       for (int j = 0; j < gameMap.getHeight(); j++) {
         Cell cellToAdd = new Cell(x, y, cellWidth, cellHeight);
-        cellToAdd.UpdateColour(new Location(i,j), game);
+        cellToAdd.UpdateColour(new Location(i, j), game);
         paintedMap[j][i] = cellToAdd;
         x += cellWidth + xGap;
       }

@@ -12,12 +12,6 @@ import lombok.Getter;
 @Getter
 class Cell implements Serializable {
 
-  private int x;
-  private int y;
-  private int width;
-  private int height;
-  private Color color;
-
   private static Map<String, Color> colors = new HashMap<String, Color>();
 
   static {
@@ -28,6 +22,12 @@ class Cell implements Serializable {
     colors.put("wall", Color.BLACK);
     colors.put("nothing", Color.LIGHT_GRAY);
   }
+
+  private int x;
+  private int y;
+  private int width;
+  private int height;
+  private Color color;
 
   public Cell(int x, int y, int width, int height) {
     this.x = x;

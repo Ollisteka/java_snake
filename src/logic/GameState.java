@@ -6,20 +6,30 @@ import javax.swing.Timer;
 import lombok.Getter;
 import lombok.Setter;
 
-@Getter
-@Setter
-public class GameState implements Serializable {
 
-  private GameMap map;
-  private Snake snake;
-  private boolean isOver = false;
-  private boolean noPoison = true;
-  private int scores;
-  private Level level;
+public class GameState implements Serializable {
 
   @Getter
   private final int delay = 100;
   private final int magic = 3;
+  @Getter
+  @Setter
+  private GameMap map;
+  @Getter
+  @Setter
+  private Snake snake;
+  @Getter
+  @Setter
+  private boolean isOver = false;
+  @Getter
+  @Setter
+  private boolean noPoison = true;
+  @Getter
+  @Setter
+  private int scores;
+  @Getter
+  @Setter
+  private Level level;
   private Timer timer;
   private int timerTick;
   @Getter

@@ -27,8 +27,9 @@ public class Snake implements Serializable {
   }
 
   private void setLength(int value) {
-    if (value > 0)
+    if (value > 0) {
       length = value;
+    }
   }
 
   public void move(Direction dir, GameState game) {
