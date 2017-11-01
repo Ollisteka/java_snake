@@ -81,9 +81,9 @@ public class GameForm implements Runnable {
   private void addLevelMenu(JMenu menu, Level level) {
     JMenuItem item = new JMenuItem(level.toString());
     item.addActionListener(arg0 -> {
-      gameFieldPanel.startNewGame(level);
-      //openGameFromFile(levels.get(level));
-      frame.pack();
+      //gameFieldPanel.startNewGame(level);
+      openGameFromFile(levels.get(level));
+      //frame.pack();
     });
     menu.add(item);
   }

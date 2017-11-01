@@ -72,14 +72,15 @@ public class GameFieldPanel extends JPanel {
   }
 
   private void nextStep(ActionEvent evt) {
-    if (game.isOver()) {
-      endGame();
-      return;
-    } else if (game.isReadyToRestart()) {
+    if (game.isReadyToRestart()) {
       restartGame();
       return;
     }
-    String newTitle = "Snake. Score: " + game.getScores();
+    if (game.isOver()) {
+      endGame();
+      return;
+    }
+    String newTitle = "Snake. Level: " + game.getLevel() + ". Score: " + game.getScores();
     if (newTitle != this.lastTitle) {
       parent.setTitle(newTitle);
     }
