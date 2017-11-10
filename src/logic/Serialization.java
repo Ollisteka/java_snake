@@ -3,9 +3,10 @@ package logic;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Deque;
-import java.util.Vector;
 
 public class Serialization {
+
+  private static final int fieldAmount = 6;
 
   // dimensions
   // scores
@@ -13,56 +14,58 @@ public class Serialization {
   // level
   // noposion
   // snake
-
   public static GameState getGameStateFromTextSerialization(ArrayList<String> text) {
-    String[] dimension = text.get(0).split(" ");
-    int n = Integer.parseInt(dimension[0]);
-    int m = Integer.parseInt(dimension[1]);
+    String[] dimensions = text.get(0).split(" ");
+    int width = Integer.parseInt(dimensions[0]);
+    int height = Integer.parseInt(dimensions[1]);
     int scores = Integer.parseInt(text.get(1));
     Boolean cycled = Boolean.parseBoolean(text.get(2));
     int level = Integer.parseInt(text.get(3));
     Boolean noPoison = Boolean.parseBoolean(text.get(4));
-    String[] snakeLocations = text.get(5).split(" ");
-    Deque<Location> snakeBody = new ArrayDeque<Location>();
-    for (String loc : snakeLocations)
-    {
-      String[] coords = loc.split(",");
-      Location newLoc = new Location(Integer.parseInt(coords[0]), Integer.parseInt(coords[1]));
-      snakeBody.add(newLoc);
-    }
-    Snake snake = new Snake(snakeBody);
 
-    GameMap gm = new GameMap(n, m, cycled);
-    for (int line = 0; line < text.size(); line++) {
-      if (line < 2) {
-        continue;
-      }
-      for (int i = 0; i < text.get(line).length(); i++) {
-        switch (text.get(line).charAt(i)) {
+    Snake snake = ParseSnake(text);
+    GameMap map = FillMap(text, width, height, cycled);
+
+    return new GameState(map, snake, noPoison, scores, Level.values()[level]);
+  }
+
+  private static GameMap FillMap(ArrayList<String> text, int width, int height, Boolean cycled) {
+    GameMap map = new GameMap(width, height, cycled);
+    for (int line = fieldAmount; line < text.size(); line++) {
+      for (int xPos = 0; xPos < text.get(line).length(); xPos++) {
+        int yPos = line - fieldAmount;
+        switch (text.get(line).charAt(xPos)) {
           case '.':
-            gm.setObject(new MapObject(line, i));
+            map.setObject(new MapObject(xPos, yPos));
             break;
           case 'w':
-            gm.setObject(new MapObject(new Wall(), line, i));
+            map.setObject(new MapObject(new Wall(), xPos, yPos));
             break;
           case 'o':
-            gm.setObject(new MapObject(new Food(10, false), line, i));
+            map.setObject(new MapObject(new Food(10, false), xPos, yPos));
             break;
           case 'x':
-            gm.setObject(new MapObject(new Food(10, true), line, i));
+            map.setObject(new MapObject(new Food(10, true), xPos, yPos));
             break;
           case 's':
-            gm.setObject(new MapObject(new Snake(line, i), line, i));
+            map.setObject(new MapObject(new Snake(xPos, yPos), xPos, yPos));
             break;
         }
       }
     }
-    GameState gameState = new GameState(gm, snake);
-    gameState.setLevel(Level.values()[level]);
-    gameState.setNoPoison(noPoison);
-    gameState.setScores(scores);
-    gameState.setSnake(snake);
-    return gameState;
+    return map;
+  }
+
+  private static Snake ParseSnake(ArrayList<String> text) {
+    String[] snakeLocations = text.get(5).split(" ");
+    Deque<Location> snakeBody = new ArrayDeque<Location>();
+    for (String loc : snakeLocations) {
+      String[] locations = loc.split(",");
+      Location newLoc = new Location(Integer.parseInt(locations[0]),
+          Integer.parseInt(locations[1]));
+      snakeBody.add(newLoc);
+    }
+    return new Snake(snakeBody);
   }
 
   // dimensions
@@ -74,42 +77,40 @@ public class Serialization {
   public static String getTextFromGameMapSerialization(GameState gameState) {
     GameMap gm = gameState.getMap();
 
-    int fieldAmount = 6;
     int size = gm.getHeight() + fieldAmount;
-    ArrayList<String> text = new ArrayList<String>(size);
-    text.add("" + gm.getHeight() + " " + gm.getWidth());
-    text.add("" + gameState.getScores());
-    text.add("" + gm.isCycled());
-    int level = 0;
-    if (gameState.getLevel() == Level.one) level = 1;
-    if (gameState.getLevel() == Level.two) level = 2;
-    text.add("" +  level);
-    text.add("" + gameState.isNoPoison());
-    text.add("");
-    for (Location loc :gameState.getSnake().getBody())
-      text.set(5, text.get(5) + loc.toString() + ' ');
+    ArrayList<String> result = new ArrayList<String>(size);
+    result.add("" + gm.getHeight() + " " + gm.getWidth());
+    result.add("" + gameState.getScores());
+    result.add("" + gm.isCycled());
+    int level = gameState.getLevel().getValue();
+    result.add("" + level);
+    result.add("" + gameState.isNoPoison());
+    result.add("");
+    for (Location loc : gameState.getSnake().getBody()) {
+      result.set(5, result.get(5) + loc.toString() + ' ');
+    }
 
-    for (int i = fieldAmount; i < gm.getHeight()+fieldAmount; i++) {
-      text.add("");
+    for (int i = fieldAmount; i < gm.getHeight() + fieldAmount; i++) {
+      result.add("");
       for (int j = 0; j < gm.getWidth(); j++) {
         MapObject obj = gm.getObject(j, i - fieldAmount);
         if (obj.getFood() != null) {
           if (obj.getFood().isPoison()) {
-            text.set(i, text.get(i) + 'x');
+            result.set(i, result.get(i) + 'x');
           } else {
-            text.set(i, text.get(i) + 'o');
+            result.set(i, result.get(i) + 'o');
           }
         } else if (obj.isFree()) {
-          text.set(i, text.get(i) + '.');
+          result.set(i, result.get(i) + '.');
         } else if (obj.getSnake() != null) {
-          text.set(i, text.get(i) + 's');
+          result.set(i, result.get(i) + 's');
         } else if (obj.getWall() != null) {
-          text.set(i, text.get(i) + 'w');
+          result.set(i, result.get(i) + 'w');
         }
       }
     }
     StringBuilder strBuilder = new StringBuilder();
-    for (String aText : text) {
+    for (String aText : result) {
       strBuilder.append(aText).append('\n');
     }
     return strBuilder.toString();

@@ -70,6 +70,16 @@ public class GameState implements Serializable {
     noPoison = true;
   }
 
+  public GameState(GameMap map, Snake snake, Boolean noPoison, int scores, Level level) {
+    this.map = map;
+    this.map.addSnake(snake);
+    this.snake = snake;
+    this.scores = scores;
+    this.noPoison = noPoison;
+    this.level = level;
+    isOver = false;
+  }
+
   public GameState(Level level) {
     switch (level) {
       case one:

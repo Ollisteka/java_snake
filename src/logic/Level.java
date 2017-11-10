@@ -1,6 +1,7 @@
 package logic;
 
 import java.io.Serializable;
+import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 public enum Level implements Serializable {
   zero {
@@ -16,6 +17,11 @@ public enum Level implements Serializable {
       game.setNoPoison(true);
 
       return map;
+    }
+
+    @Override
+    public int getValue() {
+      return 0;
     }
   },
   one {
@@ -33,6 +39,11 @@ public enum Level implements Serializable {
 
       return map;
     }
+
+    @Override
+    public int getValue() {
+      return 1;
+    }
   },
   two {
     @Override
@@ -48,7 +59,26 @@ public enum Level implements Serializable {
 
       return map;
     }
+
+    @Override
+    public int getValue() {
+      return 2;
+    }
+
+  },
+  three {
+    @Override
+    public GameMap drawMap(int width, int height, GameState game) {
+      throw new NotImplementedException();
+    }
+
+    @Override
+    public int getValue() {
+      return 3;
+    }
   };
 
   public abstract GameMap drawMap(int width, int height, GameState game);
+
+  public abstract int getValue();
 }

@@ -2,7 +2,6 @@ package logic;
 
 import java.io.Serializable;
 import java.util.ArrayDeque;
-import java.util.ArrayList;
 import java.util.Deque;
 import java.util.Random;
 import lombok.Getter;
@@ -26,6 +25,7 @@ public class Snake implements Serializable {
 
   public Snake(Deque<Location> body){
     this.body = body;
+    this.length = body.size();
   }
 
   public Location getHead() {
