@@ -14,7 +14,10 @@ public class Location implements Serializable {
     this.x = x;
     this.y = y;
   }
-
+  @Override
+  public String toString(){
+    return "" + x + ',' + y;
+  }
   @Override
   public boolean equals(Object other) {
     if (other == null) {

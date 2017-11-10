@@ -1,18 +1,26 @@
 package gui;
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import logic.GameMap;
 import logic.GameState;
 import logic.Level;
+import logic.Serialization;
 
 public class GameForm implements Runnable {
 
@@ -49,9 +57,8 @@ public class GameForm implements Runnable {
     JMenuItem save = new JMenuItem("Save");
     save.addActionListener(arg0 -> {
       try {
-        ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(saveName));
-        out.writeObject(gameFieldPanel.getGame()); //Write byte stream to file system.
-        out.close();
+        BufferedWriter writer = new BufferedWriter(new FileWriter("save"));
+        writer.write(Serialization.getTextFromGameMapSerialization(gameFieldPanel.getGame()));
       } catch (IOException ex) {
         ex.printStackTrace();
       }
@@ -67,13 +74,18 @@ public class GameForm implements Runnable {
 
   private void openGameFromFile(String name) {
     try {
-      ObjectInputStream in = new ObjectInputStream(new FileInputStream(name));
-      GameState newGame = (GameState) in.readObject();
-      in.close();
-      this.game = newGame;
+      ArrayList<String> gameText = new ArrayList<String>();
+      BufferedReader br = new BufferedReader(new FileReader(name));
+      String line;
+      while ((line = br.readLine()) != null) {
+        gameText.add(line);
+      }
+      br.close();
+      GameState newState = Serialization.getGameStateFromTextSerialization(gameText);
+      this.game = newState;
       gameFieldPanel.startNewGame(game);
       frame.pack();
-    } catch (IOException | ClassNotFoundException ex) {
+    } catch (IOException ex) {
       ex.printStackTrace();
     }
   }
